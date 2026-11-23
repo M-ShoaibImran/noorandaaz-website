@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { CATEGORIES, FABRICS, SIZES } from "@/lib/catalog";
+import { FABRICS, SIZES } from "@/lib/catalog";
 
 export function FilterBar() {
   const params = useSearchParams();
@@ -35,21 +35,10 @@ export function FilterBar() {
     push(next);
   }
 
-  const category = params.get("category") ?? "";
   const selectClass = "h-11 border border-neutral-300 bg-white px-3 text-sm";
 
   return (
     <div className="space-y-4">
-      <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
-        <button type="button" onClick={() => update("category", "")} className={`h-10 shrink-0 border px-4 text-sm ${category === "" ? "border-black bg-black text-white" : "border-neutral-300"}`}>
-          All
-        </button>
-        {CATEGORIES.map((item) => (
-          <button key={item.slug} type="button" onClick={() => update("category", item.slug)} className={`h-10 shrink-0 border px-4 text-sm ${category === item.slug ? "border-black bg-black text-white" : "border-neutral-300"}`}>
-            {item.name}
-          </button>
-        ))}
-      </div>
       <form onSubmit={applyPrice} className="grid gap-2 sm:grid-cols-2 lg:grid-cols-6">
         <input value={q} onChange={(event) => setQ(event.target.value)} placeholder="Search" className="h-11 border border-neutral-300 px-3 text-base lg:col-span-2" />
         <select className={selectClass} value={params.get("fabric") ?? ""} onChange={(event) => update("fabric", event.target.value)}>

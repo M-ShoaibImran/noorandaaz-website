@@ -5,15 +5,6 @@ import { formatPrice } from "@/lib/format";
 import { getPublicConfig } from "@/lib/config";
 import { listProducts } from "@/lib/products";
 
-const tiles = [
-  { href: "/shop?category=lawn", name: "Lawn", image: "/images/looks/neelofar-lawn.jpg" },
-  { href: "/shop?category=chiffon", name: "Chiffon", image: "/images/looks/gulnar-chiffon.jpg" },
-  { href: "/shop?category=formal", name: "Formal", image: "/images/looks/noor-formal.jpg" },
-  { href: "/shop?category=bridal", name: "Bridal", image: "/images/looks/meher-bridal.jpg" },
-  { href: "/shop?category=kurtas", name: "Kurtas", image: "/images/looks/saba-kurta.jpg" },
-  { href: "/shop?category=shalwar-kameez", name: "Shalwar Kameez", image: "/images/looks/gerua-lawn.jpg" },
-];
-
 export default async function HomePage() {
   const config = getPublicConfig();
   const { products, error } = await listProducts();
@@ -46,17 +37,11 @@ export default async function HomePage() {
       ) : null}
       {error ? <p className="bg-amber-50 px-4 py-3 text-center text-sm">{error}</p> : null}
 
-      <section className="mx-auto max-w-7xl px-4 py-10">
-        <div className="flex gap-3 overflow-x-auto pb-2 lg:grid lg:grid-cols-6 lg:overflow-visible">
-          {tiles.map((tile) => (
-            <Link key={tile.name} href={tile.href} className="w-28 shrink-0 lg:w-auto">
-              <div className="relative aspect-[3/4] bg-neutral-100">
-                <Image src={tile.image} alt={tile.name} fill sizes="180px" className="object-cover" />
-              </div>
-              <p className="pt-2 text-center text-sm">{tile.name}</p>
-            </Link>
-          ))}
-        </div>
+      <section className="mx-auto max-w-7xl px-4 py-12">
+        <p className="text-xs tracking-[0.18em] text-neutral-500 uppercase">Contact us</p>
+        <h2 className="mt-2 max-w-xl font-serif text-3xl sm:text-4xl">Contact us on the website to get more info</h2>
+        <p className="mt-3 max-w-xl text-neutral-600">Questions about a piece, a fabric, or custom stitching? Send a message and we will reply with the details.</p>
+        <Link href="/contact" className="mt-6 inline-flex h-12 items-center bg-neutral-950 px-5 text-sm text-white">Contact us</Link>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pb-12">

@@ -8,14 +8,9 @@ import { formatPrice } from "@/lib/format";
 import { useCart, useConfig } from "@/components/providers";
 
 const links = [
-  { href: "/shop?sort=new", label: "New in" },
-  { href: "/shop?category=shalwar-kameez", label: "Shalwar Kameez" },
-  { href: "/shop?category=kurtas", label: "Kurtas" },
-  { href: "/shop?category=lawn", label: "Lawn" },
-  { href: "/shop?category=chiffon", label: "Chiffon" },
-  { href: "/shop?category=formal", label: "Formal" },
-  { href: "/shop?category=bridal", label: "Bridal" },
+  { href: "/shop", label: "Shop" },
   { href: "/custom", label: "Custom stitching" },
+  { href: "/contact", label: "Contact us" },
 ];
 
 export function SiteHeader() {
@@ -72,7 +67,7 @@ export function SiteHeader() {
               <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-neutral-400" />
               <input
                 name="q"
-                placeholder="Search suits, lawn, chiffon"
+                placeholder="Search the shop"
                 className="h-11 w-full border border-neutral-300 pr-3 pl-10 text-sm"
               />
             </label>

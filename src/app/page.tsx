@@ -23,9 +23,9 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className="relative min-h-[72vh] bg-neutral-200 lg:min-h-[82vh]">
+      <section className="relative min-h-[72vh] bg-neutral-950 lg:min-h-[82vh]">
         <Image src="/images/hero-campaign.jpg" alt="Woman in a black outfit with a maroon and gold dupatta" fill priority className="object-cover object-[center_20%]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent lg:bg-gradient-to-r lg:from-black/65 lg:via-black/20 lg:to-transparent" />
+        <div className="absolute inset-0 bg-black/55" />
         <div className="absolute inset-x-0 bottom-0 max-w-xl p-5 text-white sm:p-10 lg:top-0 lg:bottom-auto lg:flex lg:h-full lg:flex-col lg:justify-center">
           <p className="text-xs tracking-[0.28em] uppercase">New in</p>
           <h1 className="mt-3 font-serif text-4xl sm:text-6xl">Ready to wear, cut for you.</h1>

@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  collection  String   @default("")
+  description String
+  details     String   @default("")
+  price       Int
+  compareAt   Int?
+  category    String
+  fabric      String
+  sizes       String
+  images      String
+  featured    Boolean  @default(false)
+  isNew       Boolean  @default(false)
+  inStock     Boolean  @default(true)
+  isSample    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  orderNumber   String      @unique
+  status        String      @default("pending")
+  customerName  String
+  phone         String
+  email         String      @default("")
+  address       String
+  city          String
+  deliveryNotes String      @default("")
+  paymentMethod String
+  paymentRef    String      @default("")
+  paymentProof  String      @default("")
+  subtotal      Int
+  deliveryFee   Int
+  total         Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  items         OrderItem[]
+
+  @@index([phone])
+  @@index([status])
+}
+
+model OrderItem {
+  id               String @id @default(cuid())
+  orderId          String
+  order            Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  kind             String
+  productId        String @default("")
+  name             String
+  size             String @default("")
+  fabric           String @default("")
+  quantity         Int
+  price            Int
+  image            String @default("")
+  designType       String @default("")
+  designNotes      String @default("")
+  referenceImage   String @default("")
+  shirtLength      String @default("")
+  chest            String @default("")
+  waist            String @default("")
+  hips             String @default("")
+  shoulder         String @default("")
+  sleeveLength     String @default("")
+  armhole          String @default("")
+  trouserLength    String @default("")
+  trouserBottom    String @default("")
+  neckDepth        String @default("")
+  measurementNotes String @default("")
+}
+
+model MeasurementProfile {
+  id            String   @id @default(cuid())
+  phone         String
+  label         String
+  shirtLength   String
+  chest         String
+  waist         String
+  hips          String
+  shoulder      String
+  sleeveLength  String
+  armhole       String
+  trouserLength String
+  trouserBottom String
+  neckDepth     String
+  notes         String   @default("")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([phone])
+}

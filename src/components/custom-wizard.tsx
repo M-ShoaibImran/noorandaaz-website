@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CUSTOM_FABRICS, MEASUREMENT_FIELDS, emptyMeasurement, validMeasure, type Measurement } from "@/lib/catalog";
@@ -194,8 +195,13 @@ export function CustomWizard({ products, initialDesignId }: { products: DesignOp
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       <p className="text-xs tracking-[0.16em] text-neutral-500 uppercase">Custom stitching</p>
-      <h1 className="mt-2 font-serif text-4xl">Stitched to you</h1>
-      <p className="mt-3 text-neutral-600">Pick a design, a fabric, and your measurements. We stitch it and deliver it in Pakistan.</p>
+      <h1 className="mt-2 font-serif text-4xl">Contact us on the website to get more info</h1>
+      <p className="mt-3 text-neutral-600">
+        Tell us about the suit you want, the fabric, or your measurements.{" "}
+        <Link href="/contact" className="underline underline-offset-4">Contact us</Link>{" "}
+        and we will reply with the details before you order.
+      </p>
+      <p className="mt-3 text-sm text-neutral-500">Or start the form below and we will stitch it and deliver it in Pakistan.</p>
       <ol className="mt-6 grid grid-cols-4 text-center text-xs">
         {steps.map((name, index) => (
           <li key={name} className={index === step ? "font-medium text-black" : "text-neutral-400"}>

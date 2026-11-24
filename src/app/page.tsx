@@ -54,29 +54,25 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className="relative h-[70vh] min-h-[560px] overflow-hidden bg-black lg:h-[80vh]">
+      <section className="relative min-h-[78vh] bg-espresso lg:min-h-[86vh]">
         <Image
-          src="/images/hero-studio.jpg"
-          alt="Woman in a blue embroidered Pakistani suit, seated in a bright studio"
+          src="/images/hero-campaign.jpg"
+          alt="Woman in an embroidered ivory suit with a gold dupatta"
           fill
           priority
-          className="object-cover object-[68%_center] lg:object-[70%_center]"
+          className="object-cover object-[center_20%]"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/25 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/45 lg:to-transparent" />
-        <div className="relative z-10 flex h-full items-center">
-          <div className="mx-auto w-full max-w-7xl px-5 text-center lg:px-12 lg:text-left">
-            <div className="mx-auto max-w-xl lg:mx-0">
-              <p className="text-xs font-medium tracking-[0.28em] text-white/85 uppercase">New arrivals</p>
-              <h1 className="mt-3 font-serif text-[2.6rem] leading-[1.05] text-white sm:text-6xl lg:text-7xl">Ready to wear, cut for you.</h1>
-              <p className="mx-auto mt-4 max-w-md text-base leading-7 text-white lg:mx-0">
-                Shalwar kameez, kurtas, and occasion dresses. Standard sizes, or stitched to you. Delivered anywhere in Pakistan.
-              </p>
-              <div className="mt-7 flex flex-wrap justify-center gap-3 lg:justify-start">
-                <Link href="/shop?sort=new" className="btn-hero">Shop new in</Link>
-                <Link href="/custom" className="btn-hero-line">Custom stitching</Link>
-              </div>
-            </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/72 to-black/45 lg:bg-gradient-to-r lg:from-black/88 lg:via-black/68 lg:to-black/35" />
+        <div className="absolute inset-x-0 bottom-36 max-w-xl p-5 text-ivory sm:bottom-28 sm:p-10 lg:top-0 lg:bottom-auto lg:flex lg:h-full lg:flex-col lg:justify-center">
+          <p className="text-xs tracking-[0.28em] text-white/80 uppercase">New arrivals</p>
+          <h1 className="mt-3 font-serif text-4xl text-white sm:text-6xl">Ready to wear, cut for you.</h1>
+          <p className="mt-4 max-w-md text-sm leading-6 text-white sm:text-base">
+            Shalwar kameez, kurtas, and occasion dresses. Standard sizes, or stitched from your measurements. Delivered anywhere in Pakistan.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link href="/shop?sort=new" className="btn-hero">Shop new in</Link>
+            <Link href="/custom" className="btn-hero-line">Custom stitching</Link>
           </div>
         </div>
       </section>

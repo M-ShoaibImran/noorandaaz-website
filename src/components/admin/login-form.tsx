@@ -33,8 +33,11 @@ export function LoginForm({ showHint }: { showHint: boolean }) {
       <p className="font-serif text-3xl">Noorandaaz</p>
       <p className="mt-1 text-sm text-neutral-500">Owner sign in</p>
       {showHint ? <p className="mt-4 text-sm text-neutral-600">Sample password: noorandaaz-admin. Set ADMIN_PASSWORD_HASH before real orders.</p> : null}
-      {error ? <p className="mt-3 text-sm text-red-700">{error}</p> : null}
-      <input name="password" type="password" required placeholder="Password" className="mt-4 h-12 w-full border border-neutral-300 px-3 text-base" />
+      {error ? <p className="mt-3 border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">{error}</p> : null}
+      <label className="mt-4 block text-sm">
+        Password
+        <input name="password" type="password" required autoComplete="current-password" className="mt-1 h-12 w-full border border-neutral-300 px-3 text-base" />
+      </label>
       <button disabled={pending} className="mt-3 h-12 w-full bg-neutral-950 text-sm text-white">{pending ? "Signing in…" : "Sign in"}</button>
     </form>
   );

@@ -171,7 +171,8 @@ export function CheckoutForm() {
       <div className="space-y-8">
         <div>
           <h1 className="font-serif text-4xl">Checkout</h1>
-          <p className="mt-2 text-sm text-neutral-600">Delivery is within Pakistan only.</p>
+          <span className="mt-3 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
+          <p className="mt-3 text-sm text-neutral-600">Delivery is within Pakistan only.</p>
         </div>
         {error ? <p className="border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">{error}</p> : null}
         {config.paymentsArePlaceholders ? (
@@ -179,18 +180,36 @@ export function CheckoutForm() {
         ) : null}
         <section className="grid gap-3">
           <h2 className="font-sans text-sm tracking-[0.14em] uppercase">Your details</h2>
-          <input required name="customerName" autoComplete="name" placeholder="Full name" className="h-12 border border-neutral-300 px-3 text-base" />
-          <input required name="phone" autoComplete="tel" inputMode="tel" placeholder="Mobile, 03XXXXXXXXX" className="h-12 border border-neutral-300 px-3 text-base" />
-          <input name="email" autoComplete="email" placeholder="Email, optional" className="h-12 border border-neutral-300 px-3 text-base" />
+          <label className="block text-sm">
+            Full name
+            <input required name="customerName" autoComplete="name" placeholder="As it should appear on the parcel" className="mt-1 h-12 w-full border border-neutral-300 px-3 text-base" />
+          </label>
+          <label className="block text-sm">
+            Mobile number
+            <input required name="phone" autoComplete="tel" inputMode="tel" placeholder="03XXXXXXXXX" className="mt-1 h-12 w-full border border-neutral-300 px-3 text-base" />
+          </label>
+          <label className="block text-sm">
+            Email, optional
+            <input name="email" autoComplete="email" placeholder="For a copy of the order" className="mt-1 h-12 w-full border border-neutral-300 px-3 text-base" />
+          </label>
         </section>
         <section className="grid gap-3">
           <h2 className="font-sans text-sm tracking-[0.14em] uppercase">Delivery</h2>
-          <textarea required name="address" autoComplete="street-address" rows={3} placeholder="House, street, area" className="border border-neutral-300 p-3 text-base" />
-          <select required name="city" defaultValue="" className="h-12 border border-neutral-300 bg-white px-3 text-base">
-            <option value="" disabled>City</option>
-            {CITIES.map((city) => <option key={city}>{city}</option>)}
-          </select>
-          <textarea name="deliveryNotes" rows={2} placeholder="Landmark or delivery notes, optional" className="border border-neutral-300 p-3 text-base" />
+          <label className="block text-sm">
+            Address
+            <textarea required name="address" autoComplete="street-address" rows={3} placeholder="House, street, area" className="mt-1 w-full border border-neutral-300 p-3 text-base" />
+          </label>
+          <label className="block text-sm">
+            City
+            <select required name="city" defaultValue="" className="mt-1 h-12 w-full border border-neutral-300 bg-white px-3 text-base">
+              <option value="" disabled>Choose a city</option>
+              {CITIES.map((city) => <option key={city}>{city}</option>)}
+            </select>
+          </label>
+          <label className="block text-sm">
+            Landmark, optional
+            <textarea name="deliveryNotes" rows={2} placeholder="Gate colour, nearby shop, or who will receive it" className="mt-1 w-full border border-neutral-300 p-3 text-base" />
+          </label>
         </section>
         <section className="space-y-3">
           <h2 className="font-sans text-sm tracking-[0.14em] uppercase">Payment</h2>
@@ -207,12 +226,13 @@ export function CheckoutForm() {
           ))}
           {account ? (
             <div className="space-y-4 bg-neutral-50 p-4 text-sm">
-              <label className="block">
-                Transaction ID / reference
-                <input name="paymentRef" className="mt-1 h-12 w-full border border-neutral-300 bg-white px-3 text-base" />
+              <label className="block text-sm">
+                Transaction ID
+                <input name="paymentRef" placeholder="From your payment confirmation" className="mt-1 h-12 w-full border border-neutral-300 bg-white px-3 text-base" />
               </label>
               <div>
-                <p className="font-medium">{account.title}</p>
+                <p className="text-xs tracking-[0.14em] text-neutral-500 uppercase">Pay this account</p>
+                <p className="mt-1 font-medium">{account.title}</p>
                 <p className="mt-1">{account.number}</p>
                 {account.extra ? <p className="mt-1 text-neutral-600">{account.extra}</p> : null}
                 <button type="button" onClick={() => copy(account.number)} className="mt-3 inline-flex h-11 items-center border border-neutral-950 bg-white px-4 text-sm">{copied === account.number ? "Copied" : "Copy"}</button>
@@ -230,7 +250,7 @@ export function CheckoutForm() {
                   <div className="border border-neutral-300 bg-white p-3">
                     {/* Preview uses a local file URL, which next/image does not serve. */}
                     <img src={proofUrl} alt="Payment screenshot preview" className="max-h-64 w-full bg-white object-contain" />
-                    <div className="mt-3 flex gap-2">
+                    <div className="mt-3 flex flex-wrap gap-2">
                       <button type="button" onClick={() => proofInput.current?.click()} className="inline-flex h-11 items-center border border-neutral-950 bg-white px-4 text-sm">Change</button>
                       <button type="button" onClick={() => clearProof()} className="inline-flex h-11 items-center border border-neutral-300 bg-white px-4 text-sm">Remove</button>
                     </div>

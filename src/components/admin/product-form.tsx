@@ -99,25 +99,29 @@ export function ProductForm({ initial }: { initial?: Initial }) {
     router.refresh();
   }
 
-  const field = "h-11 w-full border border-neutral-300 px-3 text-base";
+  const field = "mt-1 block h-11 w-full border border-neutral-300 px-3 text-base";
 
   return (
     <form onSubmit={onSubmit} className="grid max-w-3xl gap-3">
-      {error ? <p className="text-sm text-red-700">{error}</p> : null}
-      <input required className={field} placeholder="Name" value={form.name} onChange={(event) => set("name", event.target.value)} />
-      <input className={field} placeholder="Collection name" value={form.collection} onChange={(event) => set("collection", event.target.value)} />
-      <input className={field} placeholder="Slug, optional" value={form.slug} onChange={(event) => set("slug", event.target.value)} />
-      <textarea required className="min-h-28 border border-neutral-300 p-3 text-base" placeholder="Description" value={form.description} onChange={(event) => set("description", event.target.value)} />
-      <textarea className="min-h-20 border border-neutral-300 p-3 text-base" placeholder="Care and what is included" value={form.details} onChange={(event) => set("details", event.target.value)} />
+      {error ? <p className="border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">{error}</p> : null}
+      <label className="block text-sm">Name<input required className={field} placeholder="3 Piece Embroidered Lawn Suit" value={form.name} onChange={(event) => set("name", event.target.value)} /></label>
+      <label className="block text-sm">Collection<input className={`${field} mt-1`} placeholder="Neelofar" value={form.collection} onChange={(event) => set("collection", event.target.value)} /></label>
+      <label className="block text-sm">Web address, optional<input className={`${field} mt-1`} placeholder="neelofar-lawn" value={form.slug} onChange={(event) => set("slug", event.target.value)} /></label>
+      <label className="block text-sm">Description<textarea required className="mt-1 min-h-28 w-full border border-neutral-300 p-3 text-base" placeholder="Fabric, pieces, and how it looks." value={form.description} onChange={(event) => set("description", event.target.value)} /></label>
+      <label className="block text-sm">Care and what is included<textarea className="mt-1 min-h-20 w-full border border-neutral-300 p-3 text-base" placeholder="Shirt, trousers, dupatta, wash instructions." value={form.details} onChange={(event) => set("details", event.target.value)} /></label>
       <div className="grid gap-3 sm:grid-cols-2">
-        <input required type="number" min={100} className={field} placeholder="Price in Rs." value={form.price || ""} onChange={(event) => set("price", Number(event.target.value))} />
-        <input type="number" min={0} className={field} placeholder="Original price, optional" value={form.compareAt ?? ""} onChange={(event) => set("compareAt", event.target.value ? Number(event.target.value) : null)} />
+        <label className="block text-sm">Price in Rs.<input required type="number" min={100} className={`${field} mt-1`} placeholder="4490" value={form.price || ""} onChange={(event) => set("price", Number(event.target.value))} /></label>
+        <label className="block text-sm">Original price, optional<input type="number" min={0} className={`${field} mt-1`} placeholder="Higher than the sale price" value={form.compareAt ?? ""} onChange={(event) => set("compareAt", event.target.value ? Number(event.target.value) : null)} /></label>
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
-        <select className={field} value={form.category} onChange={(event) => set("category", event.target.value)}>
-          {CATEGORIES.map((category) => <option key={category.slug} value={category.slug}>{category.name}</option>)}
-        </select>
-        <input list="fabrics" className={field} placeholder="Fabric" value={form.fabric} onChange={(event) => set("fabric", event.target.value)} />
+        <label className="block text-sm">Category
+          <select className={field} value={form.category} onChange={(event) => set("category", event.target.value)}>
+            {CATEGORIES.map((category) => <option key={category.slug} value={category.slug}>{category.name}</option>)}
+          </select>
+        </label>
+        <label className="block text-sm">Fabric
+          <input list="fabrics" className={field} placeholder="Lawn" value={form.fabric} onChange={(event) => set("fabric", event.target.value)} />
+        </label>
         <datalist id="fabrics">{FABRICS.map((fabric) => <option key={fabric} value={fabric} />)}</datalist>
       </div>
       <div className="flex flex-wrap gap-3 text-sm">

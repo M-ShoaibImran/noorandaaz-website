@@ -15,6 +15,7 @@ export function ProductPurchase({ product }: { product: StoreProduct }) {
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState("");
+  const [added, setAdded] = useState(false);
   const images = product.images.length ? product.images : ["/images/hero-atelier.jpg"];
   const label = productLabel(product);
   const whatsapp = waLink(
@@ -29,6 +30,7 @@ export function ProductPurchase({ product }: { product: StoreProduct }) {
       return;
     }
     setError("");
+    setAdded(true);
     addItem({
       id: crypto.randomUUID(),
       kind: "ready",
@@ -71,6 +73,7 @@ export function ProductPurchase({ product }: { product: StoreProduct }) {
       <div className="lg:sticky lg:top-28 lg:self-start">
         <p className="text-xs tracking-[0.16em] text-neutral-500 uppercase">{product.categoryName}</p>
         <h1 className="mt-2 font-serif text-4xl">{product.collection || product.name}</h1>
+        <span className="mt-3 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
         <p className="mt-1 text-neutral-600">{product.name}</p>
         <p className="mt-4 text-lg">
           <PriceTag price={product.price} compareAt={product.compareAt} />
@@ -89,7 +92,7 @@ export function ProductPurchase({ product }: { product: StoreProduct }) {
               <button
                 key={option}
                 type="button"
-                onClick={() => { setSize(option); setError(""); }}
+                onClick={() => { setSize(option); setError(""); setAdded(false); }}
                 className={`h-12 min-w-12 border px-3 text-sm ${size === option ? "border-black bg-black text-white" : "border-neutral-300"}`}
               >
                 {option}
@@ -101,14 +104,15 @@ export function ProductPurchase({ product }: { product: StoreProduct }) {
 
         <div className="mt-5 flex items-center gap-3">
           <p className="text-xs tracking-[0.14em] uppercase">Qty</p>
-          <button type="button" className="size-10 border" onClick={() => setQuantity((value) => Math.max(1, value - 1))} aria-label="Decrease quantity">−</button>
+          <button type="button" className="size-11 border" onClick={() => setQuantity((value) => Math.max(1, value - 1))} aria-label="Decrease quantity">−</button>
           <span className="w-6 text-center">{quantity}</span>
-          <button type="button" className="size-10 border" onClick={() => setQuantity((value) => Math.min(5, value + 1))} aria-label="Increase quantity">+</button>
+          <button type="button" className="size-11 border" onClick={() => setQuantity((value) => Math.min(5, value + 1))} aria-label="Increase quantity">+</button>
         </div>
 
         <button type="button" onClick={add} disabled={!product.inStock} className="btn-gold mt-6 w-full disabled:opacity-40">
           {product.inStock ? "Add to bag" : "Out of stock"}
         </button>
+        {added ? <p className="mt-3 text-sm">Added to your bag. <Link href="/cart" className="underline">View bag</Link></p> : null}
         <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="mt-3 flex h-12 w-full items-center justify-center border border-neutral-950 text-sm font-medium">
           Order on WhatsApp
         </a>

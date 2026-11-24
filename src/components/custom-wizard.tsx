@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ImageUp } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -80,6 +81,17 @@ export function CustomWizard({ products, initialDesignId }: { products: DesignOp
 
   async function onUpload(file: File | undefined) {
     if (!file) return;
+    const type = file.type.toLowerCase();
+    const name = file.name.toLowerCase();
+    const typeOk = type === "image/jpeg" || type === "image/jpg" || type === "image/png" || type === "image/webp" || /\.(jpe?g|png|webp)$/.test(name);
+    if (!typeOk) {
+      setError("Use a JPG, PNG, or WebP photo.");
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setError("This photo is too big. Use one under 5 MB.");
+      return;
+    }
     setUploading(true);
     setError("");
     try {
@@ -196,6 +208,7 @@ export function CustomWizard({ products, initialDesignId }: { products: DesignOp
     <div className="mx-auto max-w-3xl px-4 py-8">
       <p className="text-xs tracking-[0.16em] text-neutral-500 uppercase">Custom stitching</p>
       <h1 className="mt-2 font-serif text-4xl">Contact us on the website to get more info</h1>
+      <span className="mt-3 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
       <p className="mt-3 text-neutral-600">
         Tell us about the suit you want, the fabric, or your measurements.{" "}
         <Link href="/contact" className="underline underline-offset-4">Contact us</Link>{" "}
@@ -240,14 +253,19 @@ export function CustomWizard({ products, initialDesignId }: { products: DesignOp
             </div>
           ) : null}
           {designType === "upload" ? (
-            <label className="block border border-dashed border-neutral-400 p-6 text-sm">
-              {uploading ? "Uploading…" : "Choose a JPG, PNG, or WebP under 5 MB."}
-              <input type="file" accept="image/jpeg,image/png,image/webp" className="mt-3 block w-full text-sm" onChange={(event) => onUpload(event.target.files?.[0])} />
-              {preview ? <span className="relative mt-4 block aspect-[3/4] max-w-xs"><Image src={preview} alt="Reference" fill className="object-cover" /></span> : null}
+            <label className="flex min-h-40 cursor-pointer flex-col items-center justify-center gap-2 border border-dashed border-neutral-400 bg-white px-4 py-6 text-center">
+              <ImageUp className="size-8" aria-hidden="true" />
+              <span className="text-base font-medium">{uploading ? "Uploading…" : "Upload a reference photo"}</span>
+              <span className="max-w-sm text-sm text-neutral-600">A clear photo of the suit you want copied. JPG, PNG, or WebP, up to 5 MB.</span>
+              <input type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={(event) => onUpload(event.target.files?.[0])} />
+              {preview ? <span className="relative mt-2 block aspect-[3/4] w-40"><Image src={preview} alt="Reference photo" fill className="object-cover" /></span> : null}
             </label>
           ) : null}
           {designType === "describe" ? (
-            <textarea value={designNotes} onChange={(event) => setDesignNotes(event.target.value)} rows={6} placeholder="Neckline, sleeves, colour, embroidery, and the occasion." className="w-full border border-neutral-300 p-3 text-base" />
+            <label className="block text-sm">
+              Describe the suit
+              <textarea value={designNotes} onChange={(event) => setDesignNotes(event.target.value)} rows={6} placeholder="Neckline, sleeves, colour, embroidery, and the occasion." className="mt-1 w-full border border-neutral-300 p-3 text-base" />
+            </label>
           ) : null}
         </div>
       ) : null}
@@ -284,8 +302,14 @@ export function CustomWizard({ products, initialDesignId }: { products: DesignOp
           <div className="border border-neutral-200 p-4">
             <p className="text-sm font-medium">Save these measurements</p>
             <div className="mt-3 grid gap-2 sm:grid-cols-2">
-              <input value={label} onChange={(event) => setLabel(event.target.value)} placeholder="Label, for example Myself" className="h-12 border border-neutral-300 px-3 text-base" />
-              <input value={phone} onChange={(event) => setPhone(event.target.value)} placeholder="Mobile, optional" className="h-12 border border-neutral-300 px-3 text-base" />
+              <label className="block text-sm">
+                Name for these measurements
+                <input value={label} onChange={(event) => setLabel(event.target.value)} placeholder="For example, Myself" className="mt-1 h-12 w-full border border-neutral-300 px-3 text-base" />
+              </label>
+              <label className="block text-sm">
+                Mobile, optional
+                <input value={phone} onChange={(event) => setPhone(event.target.value)} placeholder="03XXXXXXXXX" className="mt-1 h-12 w-full border border-neutral-300 px-3 text-base" />
+              </label>
             </div>
             <div className="mt-3 flex flex-wrap gap-2">
               <button type="button" onClick={saveMeasurements} className="h-11 bg-neutral-950 px-4 text-sm text-white">Save</button>

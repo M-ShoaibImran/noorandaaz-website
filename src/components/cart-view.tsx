@@ -22,7 +22,7 @@ export function CartView() {
         <h1 className="font-serif text-4xl">Your bag is empty</h1>
         <span className="mx-auto mt-3 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
         <p className="mt-3 text-neutral-600">Browse ready-to-wear, or start a custom stitching order.</p>
-        <div className="mt-6 flex justify-center gap-3">
+        <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link href="/shop" className="inline-flex h-12 items-center bg-neutral-950 px-5 text-sm text-white">Shop</Link>
           <Link href="/custom" className="inline-flex h-12 items-center border border-neutral-950 px-5 text-sm">Custom stitching</Link>
         </div>
@@ -34,10 +34,11 @@ export function CartView() {
     <div className="mx-auto grid max-w-5xl gap-8 px-4 py-8 lg:grid-cols-[1.4fr_0.8fr]">
       <div>
         <h1 className="font-serif text-4xl">Bag</h1>
+        <span className="mt-3 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
         <ul className="mt-6 divide-y divide-neutral-200 border-y border-neutral-200">
           {items.map((item) => (
             <li key={item.id} className="flex gap-4 py-4">
-              <div className="relative h-28 w-20 shrink-0 bg-neutral-100">
+              <div className="relative aspect-[3/4] w-20 shrink-0 bg-neutral-100">
                 {item.image ? <Image src={item.image} alt="" fill sizes="80px" className="object-cover" /> : null}
               </div>
               <div className="min-w-0 flex-1">
@@ -47,9 +48,9 @@ export function CartView() {
                 <div className="mt-3 flex items-center gap-3">
                   {item.kind === "ready" ? (
                     <>
-                      <button type="button" className="size-9 border" onClick={() => setQuantity(item.id, item.quantity - 1)} aria-label="Decrease">−</button>
+                      <button type="button" className="size-11 border" onClick={() => setQuantity(item.id, item.quantity - 1)} aria-label="Decrease">−</button>
                       <span className="text-sm">{item.quantity}</span>
-                      <button type="button" className="size-9 border" onClick={() => setQuantity(item.id, item.quantity + 1)} aria-label="Increase">+</button>
+                      <button type="button" className="size-11 border" onClick={() => setQuantity(item.id, item.quantity + 1)} aria-label="Increase">+</button>
                     </>
                   ) : <span className="text-sm text-neutral-500">Qty 1</span>}
                   <button type="button" onClick={() => removeItem(item.id)} className="text-sm underline">Remove</button>

@@ -43,7 +43,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <div className="mx-auto max-w-7xl px-4 pt-4 text-xs text-neutral-500">
+      <div className="mx-auto flex max-w-7xl flex-wrap gap-x-1 px-4 pt-4 text-xs text-neutral-500">
         <Link href="/shop">Shop</Link> / <Link href={`/shop?category=${product.category}`}>{product.categoryName}</Link> / {product.collection}
       </div>
       <ProductPurchase product={product} />

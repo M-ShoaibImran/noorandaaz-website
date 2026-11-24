@@ -8,6 +8,7 @@ export default function SizeGuidePage() {
   return (
     <article className="mx-auto max-w-3xl px-4 py-12">
       <h1 className="font-serif text-4xl">Size guide</h1>
+      <span className="mt-3 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
       <p className="mt-4 text-sm leading-7 text-neutral-700">Measurements are in inches and describe the body, not the garment. If you are between sizes, choose custom stitching. Ready-made lengths follow the shirt length below.</p>
       <div className="mt-6 overflow-x-auto">
         <table className="w-full min-w-[32rem] text-left text-sm">

@@ -55,7 +55,9 @@ export function ProductPurchase({ product }: { product: StoreProduct }) {
           {images.length > 1 ? (
             <div className="absolute inset-x-0 bottom-3 flex justify-center gap-2">
               {images.map((_, index) => (
-                <button key={index} type="button" aria-label={`Photo ${index + 1}`} onClick={() => setActive(index)} className={`size-2 ${index === active ? "bg-white" : "bg-white/50"}`} />
+                <button key={index} type="button" aria-label={`Photo ${index + 1}`} onClick={() => setActive(index)} className="grid size-11 place-items-center">
+                  <span className={`size-2 ${index === active ? "bg-white" : "bg-white/50"}`} />
+                </button>
               ))}
             </div>
           ) : null}
@@ -63,7 +65,7 @@ export function ProductPurchase({ product }: { product: StoreProduct }) {
         {images.length > 1 ? (
           <div className="mt-3 flex gap-2">
             {images.map((src, index) => (
-              <button key={src} type="button" onClick={() => setActive(index)} className={`relative h-20 w-16 overflow-hidden border ${index === active ? "border-black" : "border-transparent"}`}>
+              <button key={src} type="button" aria-label={`Show photo ${index + 1}`} onClick={() => setActive(index)} className={`relative h-20 w-16 overflow-hidden border ${index === active ? "border-black" : "border-transparent"}`}>
                 <Image src={src} alt="" fill sizes="64px" className="object-cover" />
               </button>
             ))}

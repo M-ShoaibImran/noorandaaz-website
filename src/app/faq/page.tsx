@@ -19,10 +19,11 @@ export default function FaqPage() {
   return (
     <article className="mx-auto max-w-3xl px-4 py-12">
       <h1 className="font-serif text-4xl">Questions</h1>
+      <span className="mt-3 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
       <div className="mt-6 divide-y divide-neutral-200 border-y border-neutral-200">
         {items.map(([question, answer]) => (
           <details key={question} className="group py-4">
-            <summary className="cursor-pointer text-base">{question}</summary>
+            <summary className="cursor-pointer py-1 text-base">{question}</summary>
             <p className="pt-2 text-sm leading-6 text-neutral-600">{answer}</p>
           </details>
         ))}

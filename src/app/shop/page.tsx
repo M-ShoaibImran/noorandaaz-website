@@ -5,7 +5,11 @@ import { ProductCard } from "@/components/product-card";
 import { categoryName } from "@/lib/catalog";
 import { filterProducts, listProducts } from "@/lib/products";
 
-export const metadata: Metadata = { title: "Shop", description: "Shop Noorandaaz ready-to-wear. Filter by category, fabric, size, and price in PKR." };
+export async function generateMetadata({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }): Promise<Metadata> {
+  const category = one((await searchParams).category);
+  const name = category ? categoryName(category) : "Shop";
+  return { title: name, description: `Shop ${name} at Noorandaaz. Prices in rupees, with delivery across Pakistan.` };
+}
 
 function one(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] : value;

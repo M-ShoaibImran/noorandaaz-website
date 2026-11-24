@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { FRIENDLY_ERROR, readJson } from "@/lib/read-json";
 
 export function LoginForm({ showHint }: { showHint: boolean }) {
   const router = useRouter();
@@ -18,10 +19,10 @@ export function LoginForm({ showHint }: { showHint: boolean }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ password }),
     });
-    const data = (await response.json()) as { error?: string };
+    const { ok, data } = await readJson<{ error?: string }>(response);
     setPending(false);
-    if (!response.ok) {
-      setError(data.error || "Could not sign in.");
+    if (!ok) {
+      setError(data.error || FRIENDLY_ERROR);
       return;
     }
     router.push("/admin");

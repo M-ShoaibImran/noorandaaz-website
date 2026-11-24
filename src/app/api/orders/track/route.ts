@@ -1,3 +1,4 @@
+import { jsonError } from "@/lib/api-error";
 import { assertSameOrigin, grantOrderView } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { isPakistaniMobile, normalizeOrderNumber, normalizePhone, ORDER_NOT_FOUND_MESSAGE, ORDER_NUMBER_MESSAGE, PHONE_MESSAGE } from "@/lib/phone";
@@ -20,7 +21,7 @@ export async function POST(request: Request) {
     if (!order) return Response.json({ error: ORDER_NOT_FOUND_MESSAGE, code: "missing" }, { status: 404 });
     await grantOrderView(order.orderNumber);
     return Response.json({ ok: true, orderNumber: order.orderNumber });
-  } catch {
-    return Response.json({ error: ORDER_NOT_FOUND_MESSAGE, code: "missing" }, { status: 400 });
+  } catch (error) {
+    return jsonError(error);
   }
 }

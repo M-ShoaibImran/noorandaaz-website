@@ -1,3 +1,4 @@
+import { jsonError } from "@/lib/api-error";
 import { assertSameOrigin, isAdmin } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { productData } from "@/lib/product-input";
@@ -17,7 +18,7 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
     await db.product.update({ where: { id }, data });
     return Response.json({ ok: true });
   } catch (error) {
-    return Response.json({ error: error instanceof Error ? error.message : "Could not save." }, { status: 400 });
+    return jsonError(error, "Could not save.");
   }
 }
 
@@ -29,6 +30,6 @@ export async function DELETE(request: Request, context: { params: Promise<{ id: 
     await db.product.delete({ where: { id } });
     return Response.json({ ok: true });
   } catch (error) {
-    return Response.json({ error: error instanceof Error ? error.message : "Could not delete." }, { status: 400 });
+    return jsonError(error, "Could not delete.");
   }
 }

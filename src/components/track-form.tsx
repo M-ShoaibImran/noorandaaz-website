@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useConfig } from "@/components/providers";
 import { formatPrice, waLink } from "@/lib/format";
 import { isPakistaniMobile, normalizeOrderNumber, ORDER_NOT_FOUND_MESSAGE, ORDER_NUMBER_MESSAGE, PHONE_MESSAGE } from "@/lib/phone";
+import { FRIENDLY_ERROR, readJson } from "@/lib/read-json";
 import { clearRecentOrders, readRecentOrders, type RecentOrder } from "@/lib/recent-orders";
 
 export function TrackForm({ initialOrder = "", alreadyShowing = false }: { initialOrder?: string; alreadyShowing?: boolean }) {
@@ -38,11 +39,11 @@ export function TrackForm({ initialOrder = "", alreadyShowing = false }: { initi
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ orderNumber: normalized, phone }),
     });
-    const data = (await response.json()) as { error?: string; code?: string; orderNumber?: string };
-    if (!response.ok) {
+    const { ok, status, data } = await readJson<{ error?: string; code?: string; orderNumber?: string }>(response);
+    if (!ok) {
       setPending(false);
-      setMissing(data.code === "missing" || response.status === 404);
-      setError(data.error || ORDER_NOT_FOUND_MESSAGE);
+      setMissing(data.code === "missing" || status === 404);
+      setError(data.error || (status === 404 ? ORDER_NOT_FOUND_MESSAGE : FRIENDLY_ERROR));
       return;
     }
     window.location.assign(`/track?order=${encodeURIComponent(data.orderNumber || normalized)}`);

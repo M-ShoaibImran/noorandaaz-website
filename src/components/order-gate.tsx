@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useConfig } from "@/components/providers";
 import { waLink } from "@/lib/format";
 import { isPakistaniMobile, ORDER_NOT_FOUND_MESSAGE, PHONE_MESSAGE } from "@/lib/phone";
+import { FRIENDLY_ERROR, readJson } from "@/lib/read-json";
 
 export function OrderGate({ orderNumber }: { orderNumber: string }) {
   const router = useRouter();
@@ -30,11 +31,11 @@ export function OrderGate({ orderNumber }: { orderNumber: string }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ orderNumber, phone }),
     });
-    const data = (await response.json()) as { error?: string; code?: string };
+    const { ok, status, data } = await readJson<{ error?: string; code?: string }>(response);
     setPending(false);
-    if (!response.ok) {
-      setMissing(data.code === "missing" || response.status === 404);
-      setError(data.error || ORDER_NOT_FOUND_MESSAGE);
+    if (!ok) {
+      setMissing(data.code === "missing" || status === 404);
+      setError(data.error || (status === 404 ? ORDER_NOT_FOUND_MESSAGE : FRIENDLY_ERROR));
       return;
     }
     router.refresh();

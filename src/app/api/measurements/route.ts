@@ -2,6 +2,7 @@ import { z } from "zod";
 import { assertSameOrigin } from "@/lib/auth";
 import { validMeasure } from "@/lib/catalog";
 import { db } from "@/lib/db";
+import { jsonError } from "@/lib/api-error";
 import { isPakistaniMobile, normalizePhone } from "@/lib/phone";
 
 const schema = z.object({
@@ -23,14 +24,18 @@ const schema = z.object({
 });
 
 export async function GET(request: Request) {
-  const phone = normalizePhone(new URL(request.url).searchParams.get("phone") || "");
-  if (!isPakistaniMobile(phone)) return Response.json({ error: "Enter a valid Pakistani mobile number." }, { status: 400 });
-  const profiles = await db.measurementProfile.findMany({
-    where: { phone },
-    orderBy: { updatedAt: "desc" },
-    take: 8,
-  });
-  return Response.json({ profiles });
+  try {
+    const phone = normalizePhone(new URL(request.url).searchParams.get("phone") || "");
+    if (!isPakistaniMobile(phone)) return Response.json({ error: "Enter a valid Pakistani mobile number." }, { status: 400 });
+    const profiles = await db.measurementProfile.findMany({
+      where: { phone },
+      orderBy: { updatedAt: "desc" },
+      take: 8,
+    });
+    return Response.json({ profiles });
+  } catch (error) {
+    return jsonError(error, "Could not load measurements.");
+  }
 }
 
 export async function POST(request: Request) {
@@ -76,6 +81,6 @@ export async function POST(request: Request) {
     else await db.measurementProfile.create({ data });
     return Response.json({ ok: true });
   } catch (error) {
-    return Response.json({ error: error instanceof Error ? error.message : "Could not save." }, { status: 400 });
+    return jsonError(error, "Could not save.");
   }
 }

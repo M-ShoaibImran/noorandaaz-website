@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { jsonError } from "@/lib/api-error";
 import { assertSameOrigin, isAdmin } from "@/lib/auth";
 import { STATUSES } from "@/lib/catalog";
 import { db } from "@/lib/db";
@@ -64,6 +65,6 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
     });
     return Response.json({ ok: true });
   } catch (error) {
-    return Response.json({ error: error instanceof Error ? error.message : "Could not update." }, { status: 400 });
+    return jsonError(error, "Could not update.");
   }
 }

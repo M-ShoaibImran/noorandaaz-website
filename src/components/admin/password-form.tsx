@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FRIENDLY_ERROR, readJson } from "@/lib/read-json";
 
 export function PasswordForm() {
   const [error, setError] = useState("");
@@ -22,10 +23,10 @@ export function PasswordForm() {
         confirm: String(form.get("confirm") || ""),
       }),
     });
-    const data = (await response.json()) as { error?: string };
+    const { ok, data } = await readJson<{ error?: string }>(response);
     setPending(false);
-    if (!response.ok) {
-      setError(data.error || "Could not change the password.");
+    if (!ok) {
+      setError(data.error || FRIENDLY_ERROR);
       return;
     }
     event.currentTarget.reset();

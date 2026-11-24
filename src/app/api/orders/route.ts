@@ -1,8 +1,11 @@
+import { jsonError, tooLarge } from "@/lib/api-error";
 import { assertSameOrigin } from "@/lib/auth";
 import { placeOrder } from "@/lib/place-order";
 import { saveImage } from "@/lib/uploads";
 
 export async function POST(request: Request) {
+  const oversized = tooLarge(request);
+  if (oversized) return oversized;
   try {
     assertSameOrigin(request);
     const form = await request.formData();
@@ -27,7 +30,6 @@ export async function POST(request: Request) {
     const order = await placeOrder(payload, paymentProof);
     return Response.json(order);
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Could not place the order.";
-    return Response.json({ error: message }, { status: 400 });
+    return jsonError(error, "Could not place the order.");
   }
 }

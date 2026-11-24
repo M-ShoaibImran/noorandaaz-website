@@ -1,7 +1,10 @@
+import { jsonError, tooLarge } from "@/lib/api-error";
 import { assertSameOrigin } from "@/lib/auth";
 import { saveImage } from "@/lib/uploads";
 
 export async function POST(request: Request) {
+  const oversized = tooLarge(request);
+  if (oversized) return oversized;
   try {
     assertSameOrigin(request);
     const form = await request.formData();
@@ -10,6 +13,6 @@ export async function POST(request: Request) {
     const path = await saveImage(file, "references");
     return Response.json({ path });
   } catch (error) {
-    return Response.json({ error: error instanceof Error ? error.message : "Upload failed." }, { status: 400 });
+    return jsonError(error, "Upload failed.");
   }
 }

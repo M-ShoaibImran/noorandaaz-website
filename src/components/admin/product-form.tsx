@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { StoreImage } from "@/components/store-image";
+import { FRIENDLY_ERROR, readJson } from "@/lib/read-json";
 import { useState } from "react";
 import { CATEGORIES, FABRICS, SIZES } from "@/lib/catalog";
 
@@ -61,8 +62,8 @@ export function ProductForm({ initial }: { initial?: Initial }) {
         const body = new FormData();
         body.set("file", file);
         const response = await fetch("/api/admin/uploads", { method: "POST", body });
-        const data = (await response.json()) as { path?: string; error?: string };
-        if (!response.ok || !data.path) throw new Error(data.error || "Upload failed");
+        const { ok, data } = await readJson<{ path?: string; error?: string }>(response);
+        if (!ok || !data.path) throw new Error(data.error || FRIENDLY_ERROR);
         setForm((current) => ({ ...current, images: [...current.images, data.path!] }));
       }
     } catch (uploadError) {
@@ -82,10 +83,10 @@ export function ProductForm({ initial }: { initial?: Initial }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
-    const data = (await response.json()) as { error?: string };
+    const { ok, data } = await readJson<{ error?: string }>(response);
     setPending(false);
-    if (!response.ok) {
-      setError(data.error || "Could not save.");
+    if (!ok) {
+      setError(data.error || FRIENDLY_ERROR);
       return;
     }
     router.push("/admin/products");

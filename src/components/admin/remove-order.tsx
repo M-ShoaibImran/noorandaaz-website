@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { FRIENDLY_ERROR, readJson } from "@/lib/read-json";
 
 export function RemoveOrder({ id }: { id: string }) {
   const router = useRouter();
@@ -23,10 +24,10 @@ export function RemoveOrder({ id }: { id: string }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "remove", remarks: reason }),
     });
-    const data = (await response.json()) as { error?: string };
+    const { ok, data } = await readJson<{ error?: string }>(response);
     setPending(false);
-    if (!response.ok) {
-      setError(data.error || "Could not remove the order.");
+    if (!ok) {
+      setError(data.error || FRIENDLY_ERROR);
       return;
     }
     setOpen(false);
@@ -82,10 +83,10 @@ export function RestoreOrder({ id }: { id: string }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "restore" }),
     });
-    const data = (await response.json()) as { error?: string };
+    const { ok, data } = await readJson<{ error?: string }>(response);
     setPending(false);
-    if (!response.ok) {
-      setError(data.error || "Could not restore the order.");
+    if (!ok) {
+      setError(data.error || FRIENDLY_ERROR);
       return;
     }
     router.push("/admin");

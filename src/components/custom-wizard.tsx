@@ -2,6 +2,7 @@
 
 import { ImageUp } from "lucide-react";
 import { StoreImage } from "@/components/store-image";
+import { FRIENDLY_ERROR, readJson } from "@/lib/read-json";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -98,8 +99,8 @@ export function CustomWizard({ products, initialDesignId }: { products: DesignOp
       const body = new FormData();
       body.set("file", file);
       const response = await fetch("/api/uploads", { method: "POST", body });
-      const data = (await response.json()) as { path?: string; error?: string };
-      if (!response.ok || !data.path) throw new Error(data.error || "Upload failed");
+      const { ok, data } = await readJson<{ path?: string; error?: string }>(response);
+      if (!ok || !data.path) throw new Error(data.error || FRIENDLY_ERROR);
       setReferenceImage(data.path);
       setPreview(data.path);
       setDesignType("upload");
@@ -137,8 +138,8 @@ export function CustomWizard({ products, initialDesignId }: { products: DesignOp
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ phone, label: entry.label, measurements }),
     });
-    const data = (await response.json()) as { error?: string };
-    if (!response.ok) setError(data.error || "Could not save to your number.");
+    const { ok, data } = await readJson<{ error?: string }>(response);
+    if (!ok) setError(data.error || FRIENDLY_ERROR);
     else setMessage("Saved on this phone and to your mobile number.");
   }
 
@@ -149,8 +150,8 @@ export function CustomWizard({ products, initialDesignId }: { products: DesignOp
       return;
     }
     const response = await fetch(`/api/measurements?phone=${normalizePhone(phone)}`);
-    const data = (await response.json()) as { profiles?: Array<{ id: string; label: string } & Measurement>; error?: string };
-    if (!response.ok || !data.profiles?.length) {
+    const { ok, data } = await readJson<{ profiles?: Array<{ id: string; label: string } & Measurement>; error?: string }>(response);
+    if (!ok || !data.profiles?.length) {
       setError(data.error || "No saved measurements for that number yet.");
       return;
     }

@@ -1,3 +1,4 @@
+import { jsonError } from "@/lib/api-error";
 import { assertSameOrigin, isAdmin } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { productData } from "@/lib/product-input";
@@ -10,6 +11,6 @@ export async function POST(request: Request) {
     const product = await db.product.create({ data });
     return Response.json({ id: product.id });
   } catch (error) {
-    return Response.json({ error: error instanceof Error ? error.message : "Could not save." }, { status: 400 });
+    return jsonError(error, "Could not save.");
   }
 }

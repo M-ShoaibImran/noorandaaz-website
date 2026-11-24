@@ -7,6 +7,7 @@ import { CITIES } from "@/lib/cities";
 import { formatPrice, shippingFee } from "@/lib/format";
 import { PriceTag } from "@/components/price-tag";
 import { isPakistaniMobile, normalizePhone } from "@/lib/phone";
+import { FRIENDLY_ERROR, readJson } from "@/lib/read-json";
 import { saveRecentOrder } from "@/lib/recent-orders";
 import { useCart, useConfig } from "@/components/providers";
 
@@ -139,8 +140,8 @@ export function CheckoutForm() {
     setPending(true);
     try {
       const response = await fetch("/api/orders", { method: "POST", body });
-      const data = (await response.json()) as { orderNumber?: string; error?: string };
-      if (!response.ok || !data.orderNumber) throw new Error(data.error || "Could not place the order.");
+      const { ok, data } = await readJson<{ orderNumber?: string; error?: string }>(response);
+      if (!ok || !data.orderNumber) throw new Error(data.error || FRIENDLY_ERROR);
       const first = items[0];
       saveRecentOrder({
         orderNumber: data.orderNumber,

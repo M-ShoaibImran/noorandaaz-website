@@ -73,7 +73,7 @@ export async function placeOrder(payload: unknown, paymentProof = "") {
   }
   const input = parsed.data;
   const phone = normalizePhone(input.phone);
-  if (!isPakistaniMobile(phone)) throw new Error("Enter a Pakistani mobile number, like 03001234567.");
+  if (!isPakistaniMobile(phone)) throw new Error("Please enter a valid mobile number like 0300 1234567");
   if (!isCity(input.city)) throw new Error("Choose a city in Pakistan.");
   const email = input.email?.trim() || "";
   if (email && !emailOk(email)) throw new Error("Enter a valid email, or leave it blank.");

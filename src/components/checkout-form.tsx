@@ -95,7 +95,7 @@ export function CheckoutForm() {
     const phone = String(form.get("phone") || "");
     const email = String(form.get("email") || "").trim();
     if (!isPakistaniMobile(phone)) {
-      setError("Enter a Pakistani mobile number, like 03001234567.");
+      setError("Please enter a valid mobile number like 0300 1234567");
       return;
     }
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {

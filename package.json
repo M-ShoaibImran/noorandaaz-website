@@ -9,6 +9,7 @@
     "lint": "eslint",
     "setup": "prisma generate && prisma db push && tsx prisma/seed.ts",
     "hash-password": "node scripts/hash-password.mjs",
+    "test:normalize": "tsx scripts/test-normalize.ts",
     "postinstall": "prisma generate"
   },
   "prisma": {

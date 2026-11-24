@@ -1,23 +1,26 @@
 import { assertSameOrigin, grantOrderView } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { isPakistaniMobile, normalizePhone } from "@/lib/phone";
+import { isPakistaniMobile, normalizeOrderNumber, normalizePhone, ORDER_NOT_FOUND_MESSAGE, ORDER_NUMBER_MESSAGE, PHONE_MESSAGE } from "@/lib/phone";
 
 export async function POST(request: Request) {
   try {
     assertSameOrigin(request);
     const body = (await request.json()) as { orderNumber?: string; phone?: string };
-    const orderNumber = (body.orderNumber || "").trim().toUpperCase();
+    const orderNumber = normalizeOrderNumber(body.orderNumber || "");
     const phone = normalizePhone(body.phone || "");
-    if (!orderNumber || !isPakistaniMobile(phone)) {
-      return Response.json({ error: "Enter the order number and a Pakistani mobile number." }, { status: 400 });
+    if (!orderNumber) return Response.json({ error: ORDER_NUMBER_MESSAGE, code: "order" }, { status: 400 });
+    if (!isPakistaniMobile(phone)) return Response.json({ error: PHONE_MESSAGE, code: "phone" }, { status: 400 });
+
+    const direct = await db.order.findUnique({ where: { orderNumber } });
+    let order = direct && normalizePhone(direct.phone) === phone ? direct : null;
+    if (!order) {
+      const rows = await db.order.findMany();
+      order = rows.find((row) => normalizeOrderNumber(row.orderNumber) === orderNumber && normalizePhone(row.phone) === phone) ?? null;
     }
-    const order = await db.order.findUnique({ where: { orderNumber } });
-    if (!order || order.phone !== phone) {
-      return Response.json({ error: "We couldn't find an order with those details." }, { status: 404 });
-    }
+    if (!order) return Response.json({ error: ORDER_NOT_FOUND_MESSAGE, code: "missing" }, { status: 404 });
     await grantOrderView(order.orderNumber);
-    return Response.json({ ok: true });
+    return Response.json({ ok: true, orderNumber: order.orderNumber });
   } catch {
-    return Response.json({ error: "We couldn't find an order with those details." }, { status: 400 });
+    return Response.json({ error: ORDER_NOT_FOUND_MESSAGE, code: "missing" }, { status: 400 });
   }
 }

@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
   turbopack: {
     rules: {
       "*.css": {
-        loaders: ["@tailwindcss/turbopack"],
+        loaders: ["./scripts/css-compat-loader.cjs", "@tailwindcss/turbopack"],
         as: "*.css",
       },
     },

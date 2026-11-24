@@ -11,4 +11,6 @@ if (!password) {
 
 const salt = randomBytes(16).toString("hex");
 const hash = scryptSync(password, salt, 64).toString("hex");
-process.stdout.write(`scrypt$${salt}$${hash}\n`);
+const line = `scrypt$${salt}$${hash}`;
+process.stdout.write(`${line}\n`);
+process.stderr.write(`In .env, escape each $ so Next does not expand it:\nADMIN_PASSWORD_HASH="${line.replaceAll("$", "\\$")}"\n`);

@@ -45,9 +45,17 @@ function options(maxAge: number) {
   };
 }
 
+let warnedBadHash = false;
+
 function hashMatches(input: string, configured: string) {
   const match = /^scrypt\$([0-9a-fA-F]+)\$([0-9a-fA-F]+)$/.exec(configured.trim());
-  if (!match) return false;
+  if (!match) {
+    if (!warnedBadHash) {
+      warnedBadHash = true;
+      console.warn("ADMIN_PASSWORD_HASH is set but is not scrypt$salt$hash. In .env, escape each $ as \\$.");
+    }
+    return false;
+  }
   const salt = match[1];
   const expected = Buffer.from(match[2], "hex");
   if (expected.length !== 64 || match[2].length !== 128) return false;

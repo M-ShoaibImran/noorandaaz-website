@@ -54,7 +54,13 @@ The JazzCash, Easypaisa, and bank values in `.env.example` are placeholders. Che
 
 `/admin` lists orders. Statuses: pending, confirmed, stitching, dispatched, delivered, cancelled. An order page shows the address, measurements for custom work, and any payment screenshot.
 
-Make the owner hash with `npm run hash-password` (pass the password as an argument, or pipe it on stdin). Put the printed line in `ADMIN_PASSWORD_HASH` and leave `ADMIN_PASSWORD` empty. The check uses `crypto.scryptSync` and `crypto.timingSafeEqual`. A wrong or missing hash does not fall back to the sample password. Sign-in is limited to 5 attempts per 15 minutes for each IP. The limit is kept in memory on this server and resets when the process restarts.
+Make the owner hash with `npm run hash-password` (pass the password as an argument, or pipe it on stdin). It prints `scrypt$<saltHex>$<hashHex>`. In `.env`, escape each `$` as `\$`, because Next treats `$name` as another variable and would otherwise erase the salt and hash:
+
+```bash
+ADMIN_PASSWORD_HASH="scrypt\$<saltHex>\$<hashHex>"
+```
+
+Leave `ADMIN_PASSWORD` empty once the hash is set. The check uses `crypto.scryptSync` (the salt is the hex string itself) and `crypto.timingSafeEqual`. A hash that is set, even if it is malformed, does not fall back to the sample password. Sign-in is limited to 5 attempts per 15 minutes for each IP. The limit is kept in memory on this server and resets when the process restarts.
 
 `/admin/products` adds, edits, and deletes pieces, including photos.
 

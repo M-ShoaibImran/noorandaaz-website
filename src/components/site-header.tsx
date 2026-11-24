@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { Menu, Search, ShoppingBag } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { readRecentOrders } from "@/lib/recent-orders";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { formatPrice } from "@/lib/format";
 import { useCart, useConfig } from "@/components/providers";
@@ -19,6 +20,12 @@ export function SiteHeader() {
   const config = useConfig();
   const { count, ready } = useCart();
   const [open, setOpen] = useState(false);
+  const [trackHref, setTrackHref] = useState("/track");
+
+  useEffect(() => {
+    const latest = readRecentOrders()[0];
+    if (latest) setTrackHref(`/track?order=${encodeURIComponent(latest.orderNumber)}`);
+  }, []);
 
   return (
     <div className="sticky top-0 z-40 border-b border-[#e7e2da] bg-[#fbf8f3]" style={{ backgroundColor: "#FBF8F3", color: "#1C1917" }}>
@@ -46,7 +53,7 @@ export function SiteHeader() {
               </form>
               <nav className="flex flex-col px-2">
                 {links.map((link) => (
-                  <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className={`flex min-h-12 items-center border-b border-[#e7e2da] px-2 text-base ${link.sale ? "font-semibold" : ""}`} style={link.sale ? { color: "#9B1C1C" } : undefined}>
+                  <Link key={link.href} href={link.href === "/track" ? trackHref : link.href} onClick={() => setOpen(false)} className={`flex min-h-12 items-center border-b border-[#e7e2da] px-2 text-base ${link.sale ? "font-semibold" : ""}`} style={link.sale ? { color: "#9B1C1C" } : undefined}>
                     {link.label}
                   </Link>
                 ))}
@@ -85,7 +92,7 @@ export function SiteHeader() {
         </div>
         <nav className="mx-auto hidden max-w-7xl gap-6 px-4 pb-3 text-sm lg:flex">
           {links.map((link) => (
-            <Link key={link.href} href={link.href} className={`whitespace-nowrap transition-colors hover:underline hover:decoration-gold hover:decoration-2 hover:underline-offset-4 ${link.sale ? "font-semibold" : "text-ink"}`} style={link.sale ? { color: "#9B1C1C" } : undefined}>
+            <Link key={link.href} href={link.href === "/track" ? trackHref : link.href} className={`whitespace-nowrap transition-colors hover:underline hover:decoration-gold hover:decoration-2 hover:underline-offset-4 ${link.sale ? "font-semibold" : "text-ink"}`} style={link.sale ? { color: "#9B1C1C" } : undefined}>
               {link.label}
             </Link>
           ))}

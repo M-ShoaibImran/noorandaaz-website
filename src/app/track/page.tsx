@@ -15,7 +15,7 @@ export default async function TrackPage({ searchParams }: { searchParams: Promis
 
   return (
     <div className="mx-auto max-w-3xl pb-12">
-      <TrackForm initialOrder={orderNumber} />
+      <TrackForm initialOrder={orderNumber} alreadyShowing={Boolean(order)} />
       {order ? (
         <div className="px-4">
           <p className="mt-8 font-serif text-3xl">{order.orderNumber}</p>

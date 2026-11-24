@@ -6,7 +6,8 @@ import { ImageUp } from "lucide-react";
 import { CITIES } from "@/lib/cities";
 import { formatPrice, shippingFee } from "@/lib/format";
 import { PriceTag } from "@/components/price-tag";
-import { isPakistaniMobile } from "@/lib/phone";
+import { isPakistaniMobile, normalizePhone } from "@/lib/phone";
+import { saveRecentOrder } from "@/lib/recent-orders";
 import { useCart, useConfig } from "@/components/providers";
 
 const methods = [
@@ -140,6 +141,14 @@ export function CheckoutForm() {
       const response = await fetch("/api/orders", { method: "POST", body });
       const data = (await response.json()) as { orderNumber?: string; error?: string };
       if (!response.ok || !data.orderNumber) throw new Error(data.error || "Could not place the order.");
+      const first = items[0];
+      saveRecentOrder({
+        orderNumber: data.orderNumber,
+        phone: normalizePhone(phone),
+        placedAt: new Date().toISOString(),
+        item: items.length > 1 ? `${first?.name || "Order"} + ${items.length - 1} more` : first?.name || "Order",
+        total,
+      });
       clear();
       window.location.assign(`/order/${data.orderNumber}`);
     } catch (submitError) {

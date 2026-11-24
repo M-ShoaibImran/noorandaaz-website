@@ -41,7 +41,8 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
       {visible.length === 0 ? (
         <div className="bg-white px-4 py-16 text-center">
           <p className="font-serif text-2xl text-espresso">Nothing matches</p>
-          <p className="mt-2 text-sm text-ink/70">Try another fabric, size, or price.</p>
+          <span className="mx-auto mt-3 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
+          <p className="mt-3 text-sm text-ink/70">Try another fabric, size, or price.</p>
           <a href="/shop" className="btn-gold mt-5">Clear filters</a>
         </div>
       ) : (

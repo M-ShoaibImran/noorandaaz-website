@@ -11,10 +11,10 @@ export function PriceTag({
 }) {
   const sale = discountPercent(price, compareAt) > 0;
   return (
-    <span>
+    <span className="inline-flex flex-wrap items-baseline gap-x-2">
       <span style={sale ? { color: "#9B1C1C", fontWeight: 600 } : undefined}>{formatPrice(price * quantity)}</span>
       {sale ? (
-        <span className="ml-2 text-[#8a8a8a] line-through">{formatPrice((compareAt ?? 0) * quantity)}</span>
+        <span className="text-[#8a8a8a] line-through">{formatPrice((compareAt ?? 0) * quantity)}</span>
       ) : null}
     </span>
   );

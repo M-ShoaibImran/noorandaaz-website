@@ -49,14 +49,14 @@ export function FilterBar() {
           <option value="">All sizes</option>
           {SIZES.map((size) => <option key={size}>{size}</option>)}
         </select>
-        <select className={selectClass} value={params.get("sort") ?? ""} onChange={(event) => update("sort", event.target.value)}>
+        <select className={`${selectClass} lg:col-span-2`} value={params.get("sort") ?? ""} onChange={(event) => update("sort", event.target.value)}>
           <option value="">Newest</option>
           <option value="new">New in first</option>
           <option value="featured">Featured</option>
           <option value="price-asc">Price: low to high</option>
           <option value="price-desc">Price: high to low</option>
         </select>
-        <div className="flex gap-2 lg:col-span-6">
+        <div className="flex gap-2 sm:col-span-2 lg:col-span-6">
           <input inputMode="numeric" value={min} onChange={(event) => setMin(event.target.value)} placeholder="Min Rs." className="h-11 w-full border border-neutral-300 px-3 text-base" />
           <input inputMode="numeric" value={max} onChange={(event) => setMax(event.target.value)} placeholder="Max Rs." className="h-11 w-full border border-neutral-300 px-3 text-base" />
           <button type="submit" className="h-11 shrink-0 bg-neutral-950 px-4 text-sm text-white">Apply</button>

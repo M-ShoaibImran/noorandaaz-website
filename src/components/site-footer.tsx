@@ -19,29 +19,29 @@ export function SiteFooter() {
         </div>
         <div>
           <p className="text-xs tracking-[0.18em] text-gold uppercase">Shop</p>
-          <ul className="mt-4 space-y-2.5 text-sm text-ivory/85">
-            <li><Link href="/shop" className="hover:text-white">All pieces</Link></li>
-            <li><Link href="/shop?category=sale" className="hover:text-white">Sale</Link></li>
-            <li><Link href="/shop?sort=new" className="hover:text-white">New arrivals</Link></li>
-            <li><Link href="/custom" className="hover:text-white">Custom stitching</Link></li>
-            <li><Link href="/size-guide" className="hover:text-white">Size guide</Link></li>
+          <ul className="mt-3 text-sm text-ivory/85">
+            <li><Link href="/shop" className="inline-flex min-h-11 items-center transition-colors hover:text-white">All pieces</Link></li>
+            <li><Link href="/shop?category=sale" className="inline-flex min-h-11 items-center transition-colors hover:text-white">Sale</Link></li>
+            <li><Link href="/shop?sort=new" className="inline-flex min-h-11 items-center transition-colors hover:text-white">New arrivals</Link></li>
+            <li><Link href="/custom" className="inline-flex min-h-11 items-center transition-colors hover:text-white">Custom stitching</Link></li>
+            <li><Link href="/size-guide" className="inline-flex min-h-11 items-center transition-colors hover:text-white">Size guide</Link></li>
           </ul>
         </div>
         <div>
           <p className="text-xs tracking-[0.18em] text-gold uppercase">Help</p>
-          <ul className="mt-4 space-y-2.5 text-sm text-ivory/85">
-            <li><Link href="/track" className="hover:text-white">Track an order</Link></li>
-            <li><Link href="/delivery" className="hover:text-white">Delivery & returns</Link></li>
-            <li><Link href="/faq" className="hover:text-white">FAQ</Link></li>
-            <li><Link href="/contact" className="hover:text-white">Contact us</Link></li>
+          <ul className="mt-3 text-sm text-ivory/85">
+            <li><Link href="/track" className="inline-flex min-h-11 items-center transition-colors hover:text-white">Track an order</Link></li>
+            <li><Link href="/delivery" className="inline-flex min-h-11 items-center transition-colors hover:text-white">Delivery & returns</Link></li>
+            <li><Link href="/faq" className="inline-flex min-h-11 items-center transition-colors hover:text-white">FAQ</Link></li>
+            <li><Link href="/contact" className="inline-flex min-h-11 items-center transition-colors hover:text-white">Contact us</Link></li>
           </ul>
         </div>
         <div>
           <p className="text-xs tracking-[0.18em] text-gold uppercase">Atelier</p>
-          <ul className="mt-4 space-y-2.5 text-sm text-ivory/85">
-            <li><Link href="/about" className="hover:text-white">About</Link></li>
-            <li><a href={whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-white">WhatsApp {config.whatsappDisplay}</a></li>
-            <li><a href={`mailto:${config.contactEmail}`} className="hover:text-white">{config.contactEmail}</a></li>
+          <ul className="mt-3 text-sm text-ivory/85">
+            <li><Link href="/about" className="inline-flex min-h-11 items-center transition-colors hover:text-white">About</Link></li>
+            <li><a href={whatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center transition-colors hover:text-white">WhatsApp {config.whatsappDisplay}</a></li>
+            <li><a href={`mailto:${config.contactEmail}`} className="inline-flex min-h-11 items-center transition-colors hover:text-white">{config.contactEmail}</a></li>
             <li>Lahore · by appointment</li>
           </ul>
         </div>

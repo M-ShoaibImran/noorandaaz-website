@@ -16,7 +16,7 @@ export function ProductCard({ product }: { product: StoreProduct }) {
               alt={productLabel(product)}
               fill
               sizes="(max-width: 768px) 50vw, 25vw"
-              className="object-cover transition duration-700 ease-out group-hover:scale-[1.04]"
+              className="object-cover transition duration-500 ease-out group-hover:scale-[1.03] group-active:scale-[1.01]"
               loading="lazy"
             />
           ) : null}

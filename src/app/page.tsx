@@ -134,7 +134,7 @@ export default async function HomePage() {
           {tiles.map((tile) => (
             <Link key={tile.name} href={tile.href} className="group">
               <div className="relative aspect-[3/4] overflow-hidden bg-white">
-                <Image src={tile.image} alt={tile.name} fill sizes="180px" className="object-cover transition duration-700 group-hover:scale-[1.04]" />
+                <Image src={tile.image} alt={tile.name} fill sizes="(max-width: 640px) 50vw, 16vw" loading="lazy" className="object-cover transition duration-500 ease-out group-hover:scale-[1.03]" />
               </div>
               <p className="pt-2 text-center text-sm text-espresso">{tile.name}</p>
             </Link>
@@ -157,6 +157,7 @@ export default async function HomePage() {
         <div>
           <p className="text-xs tracking-[0.18em] text-ink uppercase">Custom stitching</p>
           <h2 className="mt-2 font-serif text-3xl text-espresso sm:text-4xl">Stitched to your measurements.</h2>
+          <span className="mt-2 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
           <p className="mt-3 max-w-md text-sm leading-6 text-ink/80">Choose a design we already make, send a photo, or describe it. Save your measurements and reuse them next time.</p>
           <Link href="/custom" className="btn-primary mt-6">Start custom stitching</Link>
         </div>

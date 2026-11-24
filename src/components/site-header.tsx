@@ -21,36 +21,38 @@ export function SiteHeader() {
 
   return (
     <div className="sticky top-0 z-40 border-b border-[#e7e2da] bg-[#fbf8f3]" style={{ backgroundColor: "#FBF8F3", color: "#1C1917" }}>
-      <p className="bg-[#1c1917] px-3 py-2 text-center text-[11px] tracking-wide text-[#fbf8f3] sm:text-xs" style={{ backgroundColor: "#1C1917", color: "#FBF8F3" }}>
+      <p className="bg-[#1c1917] px-4 py-2 text-center text-[11px] leading-5 tracking-wide text-[#fbf8f3] sm:text-xs" style={{ backgroundColor: "#1C1917", color: "#FBF8F3" }}>
         Sale: up to 50% off · Cash on delivery · Free delivery over {formatPrice(config.freeDeliveryThreshold)}
       </p>
       <header>
-        <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4">
+        <div className="mx-auto flex min-h-16 max-w-7xl items-center gap-3 px-4 py-2">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger className="inline-flex size-11 items-center justify-center lg:hidden" aria-label="Open menu">
               <Menu className="size-5" />
             </SheetTrigger>
-            <SheetContent side="left" className="w-[min(100%,22rem)] bg-[#fbf8f3]">
+            <SheetContent side="left" className="w-[min(100%,20rem)] bg-[#fbf8f3] text-[#1c1917]" style={{ backgroundColor: "#FBF8F3", color: "#1C1917" }}>
               <SheetHeader>
                 <SheetTitle className="font-serif text-2xl">Noorandaaz</SheetTitle>
               </SheetHeader>
+              <span className="mx-4 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
               <form action="/shop" className="px-4">
                 <input
                   name="q"
                   placeholder="Search the shop"
-                  className="h-12 w-full border border-neutral-300 px-3 text-base"
+                  className="h-12 w-full border border-[#e7e2da] bg-white px-3 text-base text-[#1c1917]"
+                  style={{ backgroundColor: "#FFFFFF", color: "#1C1917" }}
                 />
               </form>
-              <nav className="mt-2 flex flex-col px-4">
+              <nav className="flex flex-col px-2">
                 {links.map((link) => (
-                  <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className={`border-b border-neutral-200 py-4 text-base ${link.sale ? "font-semibold" : ""}`} style={link.sale ? { color: "#9B1C1C" } : undefined}>
+                  <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className={`flex min-h-12 items-center border-b border-[#e7e2da] px-2 text-base ${link.sale ? "font-semibold" : ""}`} style={link.sale ? { color: "#9B1C1C" } : undefined}>
                     {link.label}
                   </Link>
                 ))}
-                <Link href="/size-guide" onClick={() => setOpen(false)} className="border-b border-neutral-200 py-4 text-base">
+                <Link href="/size-guide" onClick={() => setOpen(false)} className="flex min-h-12 items-center border-b border-[#e7e2da] px-2 text-base">
                   Size guide
                 </Link>
-                <Link href="/track" onClick={() => setOpen(false)} className="py-4 text-base">
+                <Link href="/track" onClick={() => setOpen(false)} className="flex min-h-12 items-center px-2 text-base">
                   Track an order
                 </Link>
               </nav>

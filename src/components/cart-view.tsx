@@ -20,6 +20,7 @@ export function CartView() {
     return (
       <div className="mx-auto max-w-lg px-4 py-20 text-center">
         <h1 className="font-serif text-4xl">Your bag is empty</h1>
+        <span className="mx-auto mt-3 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
         <p className="mt-3 text-neutral-600">Browse ready-to-wear, or start a custom stitching order.</p>
         <div className="mt-6 flex justify-center gap-3">
           <Link href="/shop" className="inline-flex h-12 items-center bg-neutral-950 px-5 text-sm text-white">Shop</Link>

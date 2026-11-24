@@ -8,6 +8,7 @@
     "start": "next start -p 3847 --hostname 0.0.0.0",
     "lint": "eslint",
     "setup": "prisma generate && prisma db push && tsx prisma/seed.ts",
+    "hash-password": "node scripts/hash-password.mjs",
     "postinstall": "prisma generate"
   },
   "prisma": {

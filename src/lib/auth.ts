@@ -1,15 +1,20 @@
-import { createHmac, timingSafeEqual } from "crypto";
+import { createHmac, scryptSync, timingSafeEqual } from "crypto";
 import { cookies } from "next/headers";
 
 const ADMIN_COOKIE = "na_admin";
 const VIEW_COOKIE = "na_view";
+const SAMPLE_PASSWORD = "noorandaaz-admin";
 
-function secret() {
-  return process.env.SESSION_SECRET || "dev-session-secret-change-me";
+function env(name: string) {
+  return process.env[name];
 }
 
-export function adminPassword() {
-  return process.env.ADMIN_PASSWORD || "noorandaaz-admin";
+function secret() {
+  return env("SESSION_SECRET") || "dev-session-secret-change-me";
+}
+
+export function showsSamplePasswordHint() {
+  return !env("ADMIN_PASSWORD_HASH")?.trim() && (env("ADMIN_PASSWORD") || SAMPLE_PASSWORD) === SAMPLE_PASSWORD;
 }
 
 function sign(value: string) {
@@ -40,8 +45,21 @@ function options(maxAge: number) {
   };
 }
 
+function hashMatches(input: string, configured: string) {
+  const match = /^scrypt\$([0-9a-fA-F]+)\$([0-9a-fA-F]+)$/.exec(configured.trim());
+  if (!match) return false;
+  const salt = match[1];
+  const expected = Buffer.from(match[2], "hex");
+  if (expected.length !== 64 || match[2].length !== 128) return false;
+  const actual = scryptSync(input, salt, 64);
+  if (actual.length !== expected.length) return false;
+  return timingSafeEqual(actual, expected);
+}
+
 export function passwordsMatch(input: string) {
-  const expected = adminPassword();
+  const configured = env("ADMIN_PASSWORD_HASH")?.trim();
+  if (configured) return hashMatches(input, configured);
+  const expected = env("ADMIN_PASSWORD") || SAMPLE_PASSWORD;
   const left = Buffer.from(input);
   const right = Buffer.from(expected);
   if (left.length !== right.length) return false;

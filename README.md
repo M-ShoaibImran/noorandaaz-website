@@ -17,7 +17,7 @@ npm run dev
 
 Open [http://127.0.0.1:3847](http://127.0.0.1:3847).
 
-The sample admin password is `noorandaaz-admin` until you change `ADMIN_PASSWORD`. Sign in at [http://127.0.0.1:3847/admin](http://127.0.0.1:3847/admin).
+Sign in at [http://127.0.0.1:3847/admin](http://127.0.0.1:3847/admin). Set `ADMIN_PASSWORD_HASH` before real orders. Until that hash is set, the sample password is `noorandaaz-admin` (from `ADMIN_PASSWORD`). Login allows 5 attempts per 15 minutes per IP.
 
 ## Business settings
 
@@ -34,8 +34,9 @@ All of these live in `.env`. See `.env.example`. Restart the server after changi
 | `NEXT_PUBLIC_FREE_DELIVERY_THRESHOLD` | Free delivery at or above this subtotal. Default `5000`. |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | Shown on the contact page. |
 | `NEXT_PUBLIC_SITE_URL` | Public URL used in WhatsApp messages and SEO. |
-| `ADMIN_PASSWORD` | Owner password. Change this. |
-| `SESSION_SECRET` | Signs the admin and order-view cookies. Use a long random string. |
+| `ADMIN_PASSWORD_HASH` | Owner password as `scrypt$<saltHex>$<hashHex>`. When this is set, `ADMIN_PASSWORD` is ignored. Create it with `npm run hash-password`. |
+| `ADMIN_PASSWORD` | Plaintext password used only when `ADMIN_PASSWORD_HASH` is empty. Sample value: `noorandaaz-admin`. |
+| `SESSION_SECRET` | Signs the admin and order-view cookies. Use a long random string. Changing it signs everyone out. |
 | `DATABASE_URL` | SQLite file. Default `file:./dev.db` (stored in `prisma/`). |
 
 The JazzCash, Easypaisa, and bank values in `.env.example` are placeholders. Checkout shows a warning while the IBAN is still the sample value.
@@ -53,6 +54,8 @@ The JazzCash, Easypaisa, and bank values in `.env.example` are placeholders. Che
 
 `/admin` lists orders. Statuses: pending, confirmed, stitching, dispatched, delivered, cancelled. An order page shows the address, measurements for custom work, and any payment screenshot.
 
+Make the owner hash with `npm run hash-password` (pass the password as an argument, or pipe it on stdin). Put the printed line in `ADMIN_PASSWORD_HASH` and leave `ADMIN_PASSWORD` empty. The check uses `crypto.scryptSync` and `crypto.timingSafeEqual`. A wrong or missing hash does not fall back to the sample password. Sign-in is limited to 5 attempts per 15 minutes for each IP. The limit is kept in memory on this server and resets when the process restarts.
+
 `/admin/products` adds, edits, and deletes pieces, including photos.
 
 ## Deploy
@@ -62,7 +65,7 @@ This app expects one Node server and a disk that keeps the database and uploads.
 ```bash
 npm install
 cp .env.example .env
-# edit .env: real WhatsApp number, payment accounts, a new admin password, a long SESSION_SECRET, and NEXT_PUBLIC_SITE_URL
+# edit .env: real WhatsApp number, payment accounts, ADMIN_PASSWORD_HASH, a long SESSION_SECRET, and NEXT_PUBLIC_SITE_URL
 npm run setup
 npm run build
 npm start

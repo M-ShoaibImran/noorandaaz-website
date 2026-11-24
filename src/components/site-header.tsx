@@ -19,7 +19,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="sticky top-0 z-40 border-b border-wheat/80 bg-ivory/95 backdrop-blur-md">
+    <div className="sticky top-0 z-40 border-b border-[#e7e2da] bg-[#fbf8f3]/95 backdrop-blur-md">
       <p className="bg-espresso px-3 py-2 text-center text-[11px] tracking-wide text-ivory sm:text-xs">
         Cash on delivery across Pakistan · Free delivery over {formatPrice(config.freeDeliveryThreshold)}
       </p>
@@ -29,7 +29,7 @@ export function SiteHeader() {
             <SheetTrigger className="inline-flex size-11 items-center justify-center lg:hidden" aria-label="Open menu">
               <Menu className="size-5" />
             </SheetTrigger>
-            <SheetContent side="left" className="w-[min(100%,22rem)] bg-ivory">
+            <SheetContent side="left" className="w-[min(100%,22rem)] bg-[#fbf8f3]">
               <SheetHeader>
                 <SheetTitle className="font-serif text-2xl">Noorandaaz</SheetTitle>
               </SheetHeader>
@@ -76,7 +76,7 @@ export function SiteHeader() {
           <Link href="/cart" className="relative inline-flex size-11 items-center justify-center" aria-label="Bag">
             <ShoppingBag className="size-5" />
             {ready && count > 0 ? (
-              <span className="absolute top-1 right-0 grid min-w-5 place-items-center bg-gold px-1 text-[10px] text-white">
+              <span className="absolute top-1 right-0 grid min-w-5 place-items-center bg-ink px-1 text-[10px] text-white">
                 {count}
               </span>
             ) : null}
@@ -84,7 +84,7 @@ export function SiteHeader() {
         </div>
         <nav className="mx-auto hidden max-w-7xl gap-6 px-4 pb-3 text-sm lg:flex">
           {links.map((link) => (
-            <Link key={link.href} href={link.href} className="whitespace-nowrap text-ink hover:text-gold-deep">
+            <Link key={link.href} href={link.href} className="whitespace-nowrap text-ink hover:underline hover:decoration-gold hover:decoration-2 hover:underline-offset-4">
               {link.label}
             </Link>
           ))}

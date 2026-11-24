@@ -33,7 +33,7 @@ function ProductRow({
           <h2 className="font-serif text-3xl text-espresso sm:text-4xl">{title}</h2>
           <p className="mt-1 max-w-md text-sm text-ink/70">{lede}</p>
         </div>
-        <Link href={href} className="shrink-0 text-sm text-gold-deep underline underline-offset-4">
+        <Link href={href} className="shrink-0 text-sm font-medium text-ink underline decoration-gold decoration-2 underline-offset-4">
           View all
         </Link>
       </div>
@@ -63,22 +63,22 @@ export default async function HomePage() {
           className="object-cover object-[center_20%]"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/50 lg:to-black/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/72 to-black/45 lg:bg-gradient-to-r lg:from-black/88 lg:via-black/68 lg:to-black/35" />
         <div className="absolute inset-x-0 bottom-36 max-w-xl p-5 text-ivory sm:bottom-28 sm:p-10 lg:top-0 lg:bottom-auto lg:flex lg:h-full lg:flex-col lg:justify-center">
-          <p className="text-xs tracking-[0.28em] text-wheat uppercase">New arrivals</p>
+          <p className="text-xs tracking-[0.28em] text-white/80 uppercase">New arrivals</p>
           <h1 className="mt-3 font-serif text-4xl text-white sm:text-6xl">Ready to wear, cut for you.</h1>
-          <p className="mt-4 max-w-md text-sm leading-6 text-white/90 sm:text-base">
+          <p className="mt-4 max-w-md text-sm leading-6 text-white sm:text-base">
             Shalwar kameez, kurtas, and occasion dresses. Standard sizes, or stitched from your measurements. Delivered anywhere in Pakistan.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link href="/shop?sort=new" className="btn-gold">Shop new in</Link>
-            <Link href="/custom" className="inline-flex h-12 items-center border border-white px-5 text-sm text-white">Custom stitching</Link>
+            <Link href="/shop?sort=new" className="btn-hero">Shop new in</Link>
+            <Link href="/custom" className="btn-hero-line">Custom stitching</Link>
           </div>
         </div>
       </section>
 
       {sample ? (
-        <p className="bg-espresso px-4 py-2 text-center text-xs text-wheat">
+        <p className="bg-espresso px-4 py-2 text-center text-xs text-white/80">
           Sample catalogue. Photos and prices are placeholders until you replace them in Admin.
         </p>
       ) : null}
@@ -87,12 +87,12 @@ export default async function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-10 sm:py-12">
         <div className="mb-6 flex items-end justify-between">
           <h2 className="font-serif text-3xl text-espresso">Shop by category</h2>
-          <Link href="/shop" className="text-sm text-gold-deep underline underline-offset-4">View all</Link>
+          <Link href="/shop" className="text-sm font-medium text-ink underline decoration-gold decoration-2 underline-offset-4">View all</Link>
         </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           {tiles.map((tile) => (
             <Link key={tile.name} href={tile.href} className="group">
-              <div className="relative aspect-[3/4] overflow-hidden bg-wheat/50">
+              <div className="relative aspect-[3/4] overflow-hidden bg-white">
                 <Image src={tile.image} alt={tile.name} fill sizes="180px" className="object-cover transition duration-700 group-hover:scale-[1.04]" />
               </div>
               <p className="pt-2 text-center text-sm text-espresso">{tile.name}</p>
@@ -113,14 +113,14 @@ export default async function HomePage() {
           <Image src="/images/custom-stitch.jpg" alt="Measuring tape and fabric on a tailoring table" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
         </div>
         <div>
-          <p className="text-xs tracking-[0.18em] text-gold-deep uppercase">Custom stitching</p>
+          <p className="text-xs tracking-[0.18em] text-ink uppercase">Custom stitching</p>
           <h2 className="mt-2 font-serif text-3xl text-espresso sm:text-4xl">Stitched to your measurements.</h2>
           <p className="mt-3 max-w-md text-sm leading-6 text-ink/80">Choose a design we already make, send a photo, or describe it. Save your measurements and reuse them next time.</p>
-          <Link href="/custom" className="btn-gold mt-6">Start custom stitching</Link>
+          <Link href="/custom" className="btn-primary mt-6">Start custom stitching</Link>
         </div>
       </section>
 
-      <section className="border-y border-wheat bg-cream">
+      <section className="border-y border-[#e7e2da] bg-white">
         <div className="mx-auto grid max-w-7xl sm:grid-cols-2 lg:grid-cols-4">
           {[
             ["Cash on delivery", "Pay the rider when the parcel arrives."],
@@ -145,9 +145,9 @@ export default async function HomePage() {
             ["I saved my measurements. The second order used the same set.", "Maham, Lahore"],
             ["Cash on delivery made it simple to order from Multan.", "Sana, Islamabad"],
           ].map(([quote, name]) => (
-            <blockquote key={name} className="bg-cream p-5">
-              <p className="text-sm leading-6 text-espresso">“{quote}”</p>
-              <footer className="mt-4 text-xs tracking-wide text-gold-deep uppercase">{name} · Sample</footer>
+            <blockquote key={name} className="border border-[#e7e2da] bg-white p-5">
+              <p className="text-sm leading-6 text-ink">“{quote}”</p>
+              <footer className="mt-4 text-xs tracking-wide text-ink/60 uppercase">{name} · Sample</footer>
             </blockquote>
           ))}
         </div>

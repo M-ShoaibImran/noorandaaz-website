@@ -12,7 +12,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <p className="font-serif text-3xl">Noorandaaz</p>
-          <p className="urdu mt-1 text-wheat">{config.brandUrdu}</p>
+          <p className="urdu mt-1 text-white/70">{config.brandUrdu}</p>
           <p className="mt-4 max-w-xs text-sm leading-6 text-ivory/75">
             Ready-to-wear and custom stitching for women in Pakistan. Delivered to your city.
           </p>

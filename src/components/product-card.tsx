@@ -8,7 +8,7 @@ export function ProductCard({ product }: { product: StoreProduct }) {
   return (
     <article>
       <Link href={`/product/${product.slug}`} className="group block">
-        <div className="relative aspect-[3/4] overflow-hidden bg-wheat/40">
+        <div className="relative aspect-[3/4] overflow-hidden bg-white">
           {image ? (
             <Image
               src={image}
@@ -28,7 +28,7 @@ export function ProductCard({ product }: { product: StoreProduct }) {
             {product.collection}
             {product.isSample ? " · Sample" : ""}
           </p>
-          <p className="mt-1.5 text-sm text-espresso">
+          <p className="mt-1.5 text-sm font-medium text-ink">
             {formatPrice(product.price)}
             {product.compareAt && product.compareAt > product.price ? (
               <span className="ml-2 text-ink/40 line-through">{formatPrice(product.compareAt)}</span>

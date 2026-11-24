@@ -47,7 +47,7 @@ The JazzCash, Easypaisa, and bank values in `.env.example` are placeholders. Che
 - Open a piece, choose a size, add it to the bag, or send the order on WhatsApp.
 - Start custom stitching: pick a shop design, upload a reference, or describe it, then choose fabric and enter measurements. Measurements can be saved on the phone and, with a mobile number, loaded again later.
 - Check out with name, phone, optional email, address, city, and delivery notes.
-- Pay by cash on delivery, JazzCash, Easypaisa, or bank transfer. Prepaid methods ask for a transaction ID and can take a screenshot.
+- Pay by cash on delivery, JazzCash, Easypaisa, or bank transfer. JazzCash, Easypaisa, and bank transfer require a transaction ID and a payment screenshot.
 - See an order number, then track the order later with that number and the same phone.
 
 ## Admin

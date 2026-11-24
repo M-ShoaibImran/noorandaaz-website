@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { ImageUp } from "lucide-react";
 import { CITIES } from "@/lib/cities";
 import { formatPrice, shippingFee } from "@/lib/format";
 import { PriceTag } from "@/components/price-tag";
@@ -10,10 +11,22 @@ import { useCart, useConfig } from "@/components/providers";
 
 const methods = [
   { id: "cod", label: "Cash on delivery", detail: "Pay the rider when the parcel arrives." },
-  { id: "jazzcash", label: "JazzCash", detail: "Transfer the total, then enter the transaction ID." },
-  { id: "easypaisa", label: "Easypaisa", detail: "Transfer the total, then enter the transaction ID." },
-  { id: "bank", label: "Bank transfer", detail: "Transfer to the account below and enter your reference." },
+  { id: "jazzcash", label: "JazzCash", detail: "Transfer the total, enter the transaction ID, and upload the screenshot." },
+  { id: "easypaisa", label: "Easypaisa", detail: "Transfer the total, enter the transaction ID, and upload the screenshot." },
+  { id: "bank", label: "Bank transfer", detail: "Transfer to the account below, enter the reference, and upload the screenshot." },
 ] as const;
+
+const MAX_SCREENSHOT = 5 * 1024 * 1024;
+
+function screenshotProblem(file: File) {
+  const type = file.type.toLowerCase();
+  const name = file.name.toLowerCase();
+  const typeOk = type === "image/jpeg" || type === "image/jpg" || type === "image/png" || type === "image/webp" || /\.(jpe?g|png|webp)$/.test(name);
+  if (!typeOk) return "Use a JPG, PNG, or WebP screenshot.";
+  if (file.size > MAX_SCREENSHOT) return "This screenshot is too big. Use a photo under 5 MB.";
+  if (file.size <= 0) return "Upload a screenshot of your payment.";
+  return "";
+}
 
 export function CheckoutForm() {
   const config = useConfig();
@@ -22,12 +35,57 @@ export function CheckoutForm() {
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
   const [copied, setCopied] = useState("");
+  const [proof, setProof] = useState<File | null>(null);
+  const [proofUrl, setProofUrl] = useState("");
+  const [proofError, setProofError] = useState("");
+  const proofInput = useRef<HTMLInputElement>(null);
   const fee = shippingFee(subtotal, config.deliveryFee, config.freeDeliveryThreshold);
   const total = subtotal + fee;
 
+  useEffect(() => {
+    return () => {
+      if (proofUrl) URL.revokeObjectURL(proofUrl);
+    };
+  }, [proofUrl]);
+
+  function clearProof() {
+    setProof(null);
+    setProofUrl("");
+    setProofError("");
+    if (proofInput.current) proofInput.current.value = "";
+  }
+
+  function chooseProof(file: File | null) {
+    if (proofUrl) URL.revokeObjectURL(proofUrl);
+    if (!file) {
+      clearProof();
+      return;
+    }
+    const problem = screenshotProblem(file);
+    if (problem) {
+      setProof(null);
+      setProofUrl("");
+      setProofError(problem);
+      if (proofInput.current) proofInput.current.value = "";
+      return;
+    }
+    setProof(file);
+    setProofUrl(URL.createObjectURL(file));
+    setProofError("");
+  }
+
+  function selectMethod(next: (typeof methods)[number]["id"]) {
+    setMethod(next);
+    if (next === "cod") clearProof();
+  }
+
   async function copy(value: string) {
-    await navigator.clipboard.writeText(value);
-    setCopied(value);
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(value);
+    } catch {
+      setCopied("");
+    }
   }
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -44,8 +102,17 @@ export function CheckoutForm() {
       setError("Enter a valid email, or leave it blank.");
       return;
     }
+    if (method !== "cod" && !proof) {
+      setProofError((current) => current || "Upload a screenshot of your payment.");
+    }
     if (method !== "cod" && String(form.get("paymentRef") || "").trim().length < 4) {
       setError("Enter the transaction ID or transfer reference.");
+      return;
+    }
+    if (method !== "cod" && !proof) {
+      const message = proofError || "Upload a screenshot of your payment.";
+      setProofError(message);
+      setError(message);
       return;
     }
     const payload = {
@@ -67,8 +134,7 @@ export function CheckoutForm() {
     };
     const body = new FormData();
     body.set("payload", JSON.stringify(payload));
-    const proof = form.get("proof");
-    if (proof instanceof File && proof.size > 0) body.set("proof", proof);
+    if (method !== "cod" && proof) body.set("proof", proof);
     setPending(true);
     try {
       const response = await fetch("/api/orders", { method: "POST", body });
@@ -131,7 +197,7 @@ export function CheckoutForm() {
           {methods.map((option) => (
             <label key={option.id} className={`block border p-4 ${method === option.id ? "border-black" : "border-neutral-300"}`}>
               <span className="flex items-start gap-3">
-                <input type="radio" name="method" checked={method === option.id} onChange={() => setMethod(option.id)} className="mt-1" />
+                <input type="radio" name="method" checked={method === option.id} onChange={() => selectMethod(option.id)} className="mt-1" />
                 <span>
                   <span className="block text-sm font-medium">{option.label}</span>
                   <span className="text-sm text-neutral-500">{option.detail}</span>
@@ -140,19 +206,45 @@ export function CheckoutForm() {
             </label>
           ))}
           {account ? (
-            <div className="bg-neutral-50 p-4 text-sm">
-              <p className="font-medium">{account.title}</p>
-              <p className="mt-1">{account.number}</p>
-              {account.extra ? <p className="mt-1 text-neutral-600">{account.extra}</p> : null}
-              <button type="button" onClick={() => copy(account.number)} className="mt-3 underline">{copied === account.number ? "Copied" : "Copy number"}</button>
-              <label className="mt-4 block">
+            <div className="space-y-4 bg-neutral-50 p-4 text-sm">
+              <label className="block">
                 Transaction ID / reference
                 <input name="paymentRef" className="mt-1 h-12 w-full border border-neutral-300 bg-white px-3 text-base" />
               </label>
-              <label className="mt-3 block">
-                Screenshot, optional
-                <input name="proof" type="file" accept="image/jpeg,image/png,image/webp" className="mt-1 block w-full text-sm" />
-              </label>
+              <div>
+                <p className="font-medium">{account.title}</p>
+                <p className="mt-1">{account.number}</p>
+                {account.extra ? <p className="mt-1 text-neutral-600">{account.extra}</p> : null}
+                <button type="button" onClick={() => copy(account.number)} className="mt-3 inline-flex h-11 items-center border border-neutral-950 bg-white px-4 text-sm">{copied === account.number ? "Copied" : "Copy"}</button>
+              </div>
+              <div>
+                <input
+                  ref={proofInput}
+                  id="payment-proof"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  className="sr-only"
+                  onChange={(event) => chooseProof(event.target.files?.[0] ?? null)}
+                />
+                {proofUrl ? (
+                  <div className="border border-neutral-300 bg-white p-3">
+                    {/* Preview uses a local file URL, which next/image does not serve. */}
+                    <img src={proofUrl} alt="Payment screenshot preview" className="max-h-64 w-full bg-white object-contain" />
+                    <div className="mt-3 flex gap-2">
+                      <button type="button" onClick={() => proofInput.current?.click()} className="inline-flex h-11 items-center border border-neutral-950 bg-white px-4 text-sm">Change</button>
+                      <button type="button" onClick={() => clearProof()} className="inline-flex h-11 items-center border border-neutral-300 bg-white px-4 text-sm">Remove</button>
+                    </div>
+                  </div>
+                ) : (
+                  <label htmlFor="payment-proof" className={`flex min-h-40 cursor-pointer flex-col items-center justify-center gap-2 border border-dashed bg-white px-4 py-6 text-center ${proofError ? "border-red-700" : "border-neutral-400"}`}>
+                    <ImageUp className="size-8" aria-hidden="true" />
+                    <span className="text-base font-medium text-[#1c1917]">Upload payment screenshot</span>
+                    <span className="max-w-sm text-sm text-neutral-600">Take a screenshot of your JazzCash/Easypaisa/bank confirmation and upload it here</span>
+                    <span className="text-xs text-neutral-500">JPG, PNG, or WebP, up to 5 MB</span>
+                  </label>
+                )}
+                {proofError ? <p className="mt-2 text-sm text-red-700">{proofError}</p> : null}
+              </div>
             </div>
           ) : null}
         </section>

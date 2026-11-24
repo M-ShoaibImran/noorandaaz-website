@@ -35,6 +35,13 @@ export default async function AdminOrdersPage() {
               <p className="text-xs text-neutral-500">{order.city} · {formatWhen(order.createdAt)} · {order.items.length} item{order.items.length === 1 ? "" : "s"}</p>
             </div>
             <p className="text-sm">{formatPrice(order.total)} · {paymentLabel(order.paymentMethod)}</p>
+            <p className="mt-1">
+              {order.paymentProof ? (
+                <span className="inline-block border border-[#b8893b] bg-white px-2 py-0.5 text-[11px] text-[#1c1917]">Screenshot attached</span>
+              ) : (
+                <span className="inline-block border border-[#e7e2da] bg-white px-2 py-0.5 text-[11px] text-neutral-500">No screenshot</span>
+              )}
+            </p>
             <StatusSelect id={order.id} status={order.status} />
           </li>
         ))}

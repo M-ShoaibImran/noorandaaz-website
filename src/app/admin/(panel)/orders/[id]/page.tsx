@@ -36,9 +36,10 @@ export default async function AdminOrderPage({ params }: { params: Promise<{ id:
         <p>{paymentLabel(order.paymentMethod)}</p>
         {order.paymentRef ? <p className="mt-1">Reference: {order.paymentRef}</p> : null}
         {safeImage(order.paymentProof) ? (
-          <a href={order.paymentProof} target="_blank" rel="noreferrer">
+          <a href={order.paymentProof} target="_blank" rel="noreferrer" className="mt-3 block">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={order.paymentProof} alt="Payment proof" className="mt-3 max-h-80 border border-neutral-200" />
+            <img src={order.paymentProof} alt="Payment screenshot" className="max-h-[36rem] w-full border border-neutral-200 bg-white object-contain" />
+            <span className="mt-2 inline-block text-sm underline">Open full size</span>
           </a>
         ) : <p className="mt-2 text-neutral-500">No payment screenshot.</p>}
         <p className="mt-3 font-medium">Total {formatPrice(order.total)} · delivery {formatPrice(order.deliveryFee)}</p>

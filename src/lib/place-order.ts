@@ -77,10 +77,14 @@ export async function placeOrder(payload: unknown, paymentProof = "") {
   if (!isCity(input.city)) throw new Error("Choose a city in Pakistan.");
   const email = input.email?.trim() || "";
   if (email && !emailOk(email)) throw new Error("Enter a valid email, or leave it blank.");
-  if (input.paymentMethod !== "cod" && (input.paymentRef || "").trim().length < 4) {
-    throw new Error("Enter the transaction ID or transfer reference.");
+  if (input.paymentMethod !== "cod") {
+    if ((input.paymentRef || "").trim().length < 4) {
+      throw new Error("Enter the transaction ID or transfer reference.");
+    }
+    if (!paymentProof || !isManagedImage(paymentProof)) {
+      throw new Error("Upload a screenshot of your payment.");
+    }
   }
-  if (paymentProof && !isManagedImage(paymentProof)) throw new Error("The payment screenshot could not be saved.");
 
   const lines = [];
   for (const item of input.items) {

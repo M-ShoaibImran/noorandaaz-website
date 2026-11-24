@@ -31,7 +31,7 @@ export function getPublicConfig(): PublicConfig {
     bankAccount: env("NEXT_PUBLIC_BANK_ACCOUNT", "1234-5678901234"),
     bankIban,
     deliveryFee: envInt("NEXT_PUBLIC_DELIVERY_FEE", 250),
-    freeDeliveryThreshold: envInt("NEXT_PUBLIC_FREE_DELIVERY_THRESHOLD", 8000),
+    freeDeliveryThreshold: envInt("NEXT_PUBLIC_FREE_DELIVERY_THRESHOLD", 5000),
     paymentsArePlaceholders: bankIban === PLACEHOLDER_IBAN,
   };
 }

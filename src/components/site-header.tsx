@@ -8,9 +8,10 @@ import { formatPrice } from "@/lib/format";
 import { useCart, useConfig } from "@/components/providers";
 
 const links = [
-  { href: "/shop", label: "Shop" },
-  { href: "/custom", label: "Custom stitching" },
-  { href: "/contact", label: "Contact us" },
+  { href: "/shop", label: "Shop", sale: false },
+  { href: "/shop?category=sale", label: "Sale", sale: true },
+  { href: "/custom", label: "Custom stitching", sale: false },
+  { href: "/contact", label: "Contact us", sale: false },
 ];
 
 export function SiteHeader() {
@@ -21,7 +22,7 @@ export function SiteHeader() {
   return (
     <div className="sticky top-0 z-40 border-b border-[#e7e2da] bg-[#fbf8f3]" style={{ backgroundColor: "#FBF8F3", color: "#1C1917" }}>
       <p className="bg-[#1c1917] px-3 py-2 text-center text-[11px] tracking-wide text-[#fbf8f3] sm:text-xs" style={{ backgroundColor: "#1C1917", color: "#FBF8F3" }}>
-        Cash on delivery across Pakistan · Free delivery over {formatPrice(config.freeDeliveryThreshold)}
+        Sale: up to 50% off · Cash on delivery · Free delivery over {formatPrice(config.freeDeliveryThreshold)}
       </p>
       <header>
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4">
@@ -42,7 +43,7 @@ export function SiteHeader() {
               </form>
               <nav className="mt-2 flex flex-col px-4">
                 {links.map((link) => (
-                  <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="border-b border-neutral-200 py-4 text-base">
+                  <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className={`border-b border-neutral-200 py-4 text-base ${link.sale ? "font-semibold" : ""}`} style={link.sale ? { color: "#9B1C1C" } : undefined}>
                     {link.label}
                   </Link>
                 ))}
@@ -84,7 +85,7 @@ export function SiteHeader() {
         </div>
         <nav className="mx-auto hidden max-w-7xl gap-6 px-4 pb-3 text-sm lg:flex">
           {links.map((link) => (
-            <Link key={link.href} href={link.href} className="whitespace-nowrap text-ink hover:underline hover:decoration-gold hover:decoration-2 hover:underline-offset-4">
+            <Link key={link.href} href={link.href} className={`whitespace-nowrap transition-colors hover:underline hover:decoration-gold hover:decoration-2 hover:underline-offset-4 ${link.sale ? "font-semibold" : "text-ink"}`} style={link.sale ? { color: "#9B1C1C" } : undefined}>
               {link.label}
             </Link>
           ))}

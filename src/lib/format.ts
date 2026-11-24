@@ -2,6 +2,11 @@ export function formatPrice(amount: number) {
   return `Rs. ${Math.round(amount).toLocaleString("en-PK")}`;
 }
 
+export function discountPercent(price: number, compareAt?: number | null) {
+  if (compareAt == null || compareAt <= price) return 0;
+  return Math.round(((compareAt - price) / compareAt) * 100);
+}
+
 export function shippingFee(subtotal: number, fee: number, threshold: number) {
   if (subtotal <= 0) return 0;
   if (threshold > 0 && subtotal >= threshold) return 0;

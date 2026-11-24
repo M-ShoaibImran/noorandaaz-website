@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { formatPrice, productLabel, waLink } from "@/lib/format";
+import { PriceTag, SaleBadge } from "@/components/price-tag";
 import type { StoreProduct } from "@/lib/products";
 import { useCart, useConfig } from "@/components/providers";
 
@@ -35,6 +36,7 @@ export function ProductPurchase({ product }: { product: StoreProduct }) {
       slug: product.slug,
       name: label,
       price: product.price,
+      compareAt: product.compareAt,
       quantity,
       size,
       fabric: product.fabric,
@@ -47,6 +49,7 @@ export function ProductPurchase({ product }: { product: StoreProduct }) {
       <div>
         <div className="relative aspect-[3/4] bg-neutral-100">
           <Image src={images[active]} alt={label} fill priority sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+          <SaleBadge price={product.price} compareAt={product.compareAt} />
           {images.length > 1 ? (
             <div className="absolute inset-x-0 bottom-3 flex justify-center gap-2">
               {images.map((_, index) => (
@@ -70,10 +73,7 @@ export function ProductPurchase({ product }: { product: StoreProduct }) {
         <h1 className="mt-2 font-serif text-4xl">{product.collection || product.name}</h1>
         <p className="mt-1 text-neutral-600">{product.name}</p>
         <p className="mt-4 text-lg">
-          {formatPrice(product.price)}
-          {product.compareAt && product.compareAt > product.price ? (
-            <span className="ml-2 text-base text-neutral-400 line-through">{formatPrice(product.compareAt)}</span>
-          ) : null}
+          <PriceTag price={product.price} compareAt={product.compareAt} />
         </p>
         <p className="mt-2 text-sm text-neutral-500">{product.fabric}{product.isSample ? " · Sample piece" : ""}</p>
         <p className="mt-5 leading-7 text-neutral-700">{product.description}</p>

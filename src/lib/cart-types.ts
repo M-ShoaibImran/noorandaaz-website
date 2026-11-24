@@ -16,6 +16,7 @@ export type CartItem = {
   slug?: string;
   name: string;
   price: number;
+  compareAt?: number | null;
   quantity: number;
   size?: string;
   fabric?: string;

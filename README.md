@@ -31,7 +31,7 @@ All of these live in `.env`. See `.env.example`. Restart the server after changi
 | `NEXT_PUBLIC_EASYPAISA_NUMBER` / `NEXT_PUBLIC_EASYPAISA_TITLE` | Easypaisa account shown at checkout. |
 | `NEXT_PUBLIC_BANK_NAME` / `NEXT_PUBLIC_BANK_TITLE` / `NEXT_PUBLIC_BANK_ACCOUNT` / `NEXT_PUBLIC_BANK_IBAN` | Bank transfer details. |
 | `NEXT_PUBLIC_DELIVERY_FEE` | Flat delivery fee in whole rupees. Default `250`. |
-| `NEXT_PUBLIC_FREE_DELIVERY_THRESHOLD` | Free delivery at or above this subtotal. Default `8000`. |
+| `NEXT_PUBLIC_FREE_DELIVERY_THRESHOLD` | Free delivery at or above this subtotal. Default `5000`. |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | Shown on the contact page. |
 | `NEXT_PUBLIC_SITE_URL` | Public URL used in WhatsApp messages and SEO. |
 | `ADMIN_PASSWORD` | Owner password. Change this. |

@@ -111,7 +111,7 @@ export function ProductForm({ initial }: { initial?: Initial }) {
       <textarea className="min-h-20 border border-neutral-300 p-3 text-base" placeholder="Care and what is included" value={form.details} onChange={(event) => set("details", event.target.value)} />
       <div className="grid gap-3 sm:grid-cols-2">
         <input required type="number" min={100} className={field} placeholder="Price in Rs." value={form.price || ""} onChange={(event) => set("price", Number(event.target.value))} />
-        <input type="number" min={0} className={field} placeholder="Compare-at price, optional" value={form.compareAt ?? ""} onChange={(event) => set("compareAt", event.target.value ? Number(event.target.value) : null)} />
+        <input type="number" min={0} className={field} placeholder="Original price, optional" value={form.compareAt ?? ""} onChange={(event) => set("compareAt", event.target.value ? Number(event.target.value) : null)} />
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
         <select className={field} value={form.category} onChange={(event) => set("category", event.target.value)}>

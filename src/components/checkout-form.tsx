@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { CITIES } from "@/lib/cities";
 import { formatPrice, shippingFee } from "@/lib/format";
+import { PriceTag } from "@/components/price-tag";
 import { isPakistaniMobile } from "@/lib/phone";
 import { useCart, useConfig } from "@/components/providers";
 
@@ -161,7 +162,7 @@ export function CheckoutForm() {
           {items.map((item) => (
             <li key={item.id} className="flex justify-between gap-3">
               <span>{item.name} × {item.quantity}</span>
-              <span>{formatPrice(item.price * item.quantity)}</span>
+              <span className="shrink-0 text-right"><PriceTag price={item.price} compareAt={item.compareAt} quantity={item.quantity} /></span>
             </li>
           ))}
         </ul>

@@ -21,6 +21,7 @@ export function SiteFooter() {
           <p className="text-xs tracking-[0.18em] text-gold uppercase">Shop</p>
           <ul className="mt-4 space-y-2.5 text-sm text-ivory/85">
             <li><Link href="/shop" className="hover:text-white">All pieces</Link></li>
+            <li><Link href="/shop?category=sale" className="hover:text-white">Sale</Link></li>
             <li><Link href="/shop?sort=new" className="hover:text-white">New arrivals</Link></li>
             <li><Link href="/custom" className="hover:text-white">Custom stitching</Link></li>
             <li><Link href="/size-guide" className="hover:text-white">Size guide</Link></li>
@@ -45,8 +46,14 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-white/10 px-4 py-4 text-center text-xs tracking-wide text-ivory/60">
-        Cash on delivery · JazzCash · Easypaisa · Bank transfer · Pakistan only
+      <div className="border-t border-white/10 px-4 py-5">
+        <p className="text-center text-[11px] tracking-[0.16em] text-white/50 uppercase">Pay with</p>
+        <ul className="mt-3 flex flex-wrap items-center justify-center gap-2">
+          {["Cash on delivery", "JazzCash", "Easypaisa", "Bank transfer"].map((method) => (
+            <li key={method} className="border border-white/25 px-3 py-1.5 text-xs text-white/85">{method}</li>
+          ))}
+        </ul>
+        <p className="mt-3 text-center text-xs text-white/50">Pakistan only</p>
       </div>
     </footer>
   );

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { formatPrice, shippingFee, waLink } from "@/lib/format";
+import { PriceTag } from "@/components/price-tag";
 import { useCart, useConfig } from "@/components/providers";
 
 export function CartView() {
@@ -41,7 +42,7 @@ export function CartView() {
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium">{item.name}</p>
                 <p className="mt-1 text-xs text-neutral-500">{item.size ? `Size ${item.size}` : "Custom"}{item.fabric ? ` · ${item.fabric}` : ""}</p>
-                <p className="mt-2 text-sm">{formatPrice(item.price)}</p>
+                <p className="mt-2 text-sm"><PriceTag price={item.price} compareAt={item.compareAt} quantity={item.quantity} /></p>
                 <div className="mt-3 flex items-center gap-3">
                   {item.kind === "ready" ? (
                     <>

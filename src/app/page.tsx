@@ -31,13 +31,14 @@ function ProductRow({
       <div className="mb-6 flex items-end justify-between gap-4">
         <div>
           <h2 className="font-serif text-3xl text-espresso sm:text-4xl">{title}</h2>
-          <p className="mt-1 max-w-md text-sm text-ink/70">{lede}</p>
+          <span className="mt-2 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
+          <p className="mt-2 max-w-md text-sm leading-6 text-ink/70">{lede}</p>
         </div>
         <Link href={href} className="shrink-0 text-sm font-medium text-ink underline decoration-gold decoration-2 underline-offset-4">
           View all
         </Link>
       </div>
-      <div className="grid grid-cols-2 gap-x-3 gap-y-8 sm:gap-x-5 lg:grid-cols-4">
+      <div className="grid grid-cols-2 items-stretch gap-x-3 gap-y-8 sm:gap-x-5 lg:grid-cols-4">
         {products.slice(0, 4).map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
@@ -123,7 +124,10 @@ export default async function HomePage() {
 
       <section className="mx-auto max-w-7xl px-4 py-10 sm:py-12">
         <div className="mb-6 flex items-end justify-between">
-          <h2 className="font-serif text-3xl text-espresso">Shop by category</h2>
+          <div>
+            <h2 className="font-serif text-3xl text-espresso">Shop by category</h2>
+            <span className="mt-2 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
+          </div>
           <Link href="/shop" className="text-sm font-medium text-ink underline decoration-gold decoration-2 underline-offset-4">View all</Link>
         </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
@@ -138,10 +142,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <ProductRow title="New arrivals" lede="Just in this week. Ready to ship in standard sizes." href="/shop?sort=new" products={products.filter((product) => product.isNew)} />
+      <ProductRow title="Sale" lede="Marked-down lawn, pret, and formal. Up to 50% off." href="/shop?category=sale" products={by("sale")} />
+      <ProductRow title="New arrivals" lede="Just in this week. Ready to ship in standard sizes." href="/shop?sort=new" products={products.filter((product) => product.isNew && product.category !== "sale")} />
       <ProductRow title="Ready to wear" lede="Pret suits and kurtas, stitched and ready." href="/shop?category=shalwar-kameez" products={by("shalwar-kameez", "kurtas")} />
       <ProductRow title="Unstitched" lede="Fabric sets to stitch at home, or send to our atelier." href="/shop?category=unstitched" products={by("unstitched")} />
-      <ProductRow title="Lawn and summer" lede="Light lawn for warm days." href="/shop?category=lawn" products={products.filter((product) => product.category === "lawn" || product.fabric === "Lawn")} />
+      <ProductRow title="Lawn and summer" lede="Light lawn for warm days." href="/shop?category=lawn" products={products.filter((product) => product.category !== "sale" && (product.category === "lawn" || product.fabric === "Lawn"))} />
       <ProductRow title="Formal and bridal" lede="Evenings, baraat, and walima." href="/shop?category=bridal" products={by("formal", "bridal")} />
       <ProductRow title="Eid and festive" lede="Chiffon, velvet, and embroidered pieces for the season." href="/shop?category=chiffon" products={by("chiffon", "formal")} />
 
@@ -175,6 +180,7 @@ export default async function HomePage() {
 
       <section className="mx-auto max-w-7xl px-4 py-14">
         <h2 className="font-serif text-3xl text-espresso">What customers say</h2>
+        <span className="mt-2 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
         <p className="mt-2 text-sm text-ink/60">Sample notes. Replace them with words from your own clients.</p>
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           {[

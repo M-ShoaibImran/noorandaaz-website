@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { FilterBar } from "@/components/filter-bar";
 import { ProductCard } from "@/components/product-card";
+import { categoryName } from "@/lib/catalog";
 import { filterProducts, listProducts } from "@/lib/products";
 
 export const metadata: Metadata = { title: "Shop", description: "Shop Noorandaaz ready-to-wear. Filter by category, fabric, size, and price in PKR." };
@@ -14,6 +15,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
   const params = await searchParams;
   const min = Number(one(params.min));
   const max = Number(one(params.max));
+  const category = one(params.category);
   const { products, error } = await listProducts();
   const visible = filterProducts(products, {
     q: one(params.q),
@@ -27,8 +29,9 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
-      <h1 className="font-serif text-4xl">Shop</h1>
-      <p className="mt-2 text-sm text-neutral-600">{visible.length} {visible.length === 1 ? "piece" : "pieces"}</p>
+      <h1 className="font-serif text-4xl">{category ? categoryName(category) : "Shop"}</h1>
+      <span className="mt-3 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
+      <p className="mt-3 text-sm text-neutral-600">{visible.length} {visible.length === 1 ? "piece" : "pieces"}</p>
       {error ? <p className="mt-4 text-sm">{error}</p> : null}
       <div className="mt-6">
         <Suspense fallback={<div className="h-24 bg-neutral-50" />}>
@@ -42,7 +45,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
           <a href="/shop" className="btn-gold mt-5">Clear filters</a>
         </div>
       ) : (
-        <div className="mt-8 grid grid-cols-2 gap-x-3 gap-y-8 lg:grid-cols-4">
+        <div className="mt-8 grid grid-cols-2 items-stretch gap-x-3 gap-y-8 sm:gap-x-5 lg:grid-cols-4">
           {visible.map((product) => <ProductCard key={product.id} product={product} />)}
         </div>
       )}

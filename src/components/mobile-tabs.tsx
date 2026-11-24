@@ -16,7 +16,7 @@ export function MobileTabs() {
   const path = usePathname();
   const { count, ready } = useCart();
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-neutral-200 bg-white lg:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-[#e7e2da] bg-white lg:hidden" style={{ backgroundColor: "#FFFFFF" }}>
       {tabs.map((tab) => {
         const active = tab.match(path);
         const Icon = tab.icon;

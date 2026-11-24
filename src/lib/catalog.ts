@@ -6,6 +6,7 @@ export const CATEGORIES = [
   { slug: "formal", name: "Formal" },
   { slug: "bridal", name: "Bridal & Party" },
   { slug: "unstitched", name: "Unstitched" },
+  { slug: "sale", name: "Sale" },
 ] as const;
 
 export const FABRICS = [
@@ -41,14 +42,14 @@ export type PaymentMethod = (typeof PAYMENT_METHODS)[number]["id"];
 export type OrderStatus = (typeof STATUSES)[number]["id"];
 
 export const CUSTOM_FABRICS = [
-  { id: "lawn", name: "Lawn", price: 6500, note: "Light everyday summer cloth" },
-  { id: "cotton", name: "Cotton", price: 5800, note: "Soft cloth for daily wear" },
-  { id: "khaddar", name: "Khaddar", price: 7200, note: "Woven cloth for cooler months" },
-  { id: "chiffon", name: "Chiffon", price: 11500, note: "Sheer drape for evenings" },
-  { id: "raw-silk", name: "Raw silk", price: 15500, note: "Formal sheen" },
-  { id: "organza", name: "Organza", price: 17500, note: "Light volume for parties" },
-  { id: "velvet", name: "Velvet", price: 19500, note: "Heavier festive cloth" },
-  { id: "customer", name: "My own fabric", price: 3500, note: "Stitching only. Send the fabric after we confirm." },
+  { id: "lawn", name: "Lawn", price: 2500, note: "Stitching charge for a light summer suit" },
+  { id: "cotton", name: "Cotton", price: 2200, note: "Stitching charge for daily wear" },
+  { id: "khaddar", name: "Khaddar", price: 2800, note: "Stitching charge for cooler months" },
+  { id: "chiffon", name: "Chiffon", price: 3200, note: "Stitching charge for an evening suit" },
+  { id: "raw-silk", name: "Raw silk", price: 3500, note: "Stitching charge for a formal suit" },
+  { id: "organza", name: "Organza", price: 3500, note: "Stitching charge for a party suit" },
+  { id: "velvet", name: "Velvet", price: 3500, note: "Stitching charge for a festive suit" },
+  { id: "customer", name: "My own fabric", price: 1500, note: "Stitching only. Send the fabric after we confirm." },
 ] as const;
 
 export const MEASUREMENT_FIELDS = [

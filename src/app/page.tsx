@@ -62,9 +62,46 @@ export default async function HomePage() {
           priority
           className="object-cover object-[center_20%]"
           sizes="100vw"
+          style={{ zIndex: 0 }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/72 to-black/45 lg:bg-gradient-to-r lg:from-black/88 lg:via-black/68 lg:to-black/35" />
-        <div className="absolute inset-x-0 bottom-36 max-w-xl p-5 text-ivory sm:bottom-28 sm:p-10 lg:top-0 lg:bottom-auto lg:flex lg:h-full lg:flex-col lg:justify-center">
+        <div
+          aria-hidden="true"
+          className="na-hero-bottom"
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            zIndex: 1,
+            pointerEvents: "none",
+            background: "linear-gradient(to top, rgba(0,0,0,0.88), rgba(0,0,0,0.62) 48%, rgba(0,0,0,0.4))",
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="na-hero-side"
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            zIndex: 1,
+            pointerEvents: "none",
+            background: "linear-gradient(to right, rgba(0,0,0,0.75), rgba(0,0,0,0.35))",
+          }}
+        />
+        <style>{`
+          @media (max-width: 1023px) {
+            .na-hero-side { display: none; }
+          }
+          @media (min-width: 1024px) {
+            .na-hero-bottom { display: none; }
+            .na-hero-side { display: block; }
+          }
+        `}</style>
+        <div className="absolute inset-x-0 bottom-36 z-[2] max-w-xl p-5 text-ivory sm:bottom-28 sm:p-10 lg:top-0 lg:bottom-auto lg:flex lg:h-full lg:flex-col lg:justify-center">
           <p className="text-xs tracking-[0.28em] text-white/80 uppercase">New arrivals</p>
           <h1 className="mt-3 font-serif text-4xl text-white sm:text-6xl">Ready to wear, cut for you.</h1>
           <p className="mt-4 max-w-md text-sm leading-6 text-white sm:text-base">

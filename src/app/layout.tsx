@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_PK",
     siteName: "Noorandaaz",
-    images: [{ url: "/images/hero-campaign.jpg", width: 1200, height: 675, alt: "Noorandaaz campaign" }],
+    images: [{ url: "/images/hero-studio.jpg", width: 1200, height: 1600, alt: "Noorandaaz campaign" }],
   },
   twitter: { card: "summary_large_image" },
 };

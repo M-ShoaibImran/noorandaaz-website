@@ -46,7 +46,7 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-white/10 px-4 py-5">
+      <div className="border-t border-white/10 px-4 pt-5 pb-32 lg:pb-5">
         <p className="text-center text-[11px] tracking-[0.16em] text-white/50 uppercase">Pay with</p>
         <ul className="mt-3 flex flex-wrap items-center justify-center gap-2">
           {["Cash on delivery", "JazzCash", "Easypaisa", "Bank transfer"].map((method) => (

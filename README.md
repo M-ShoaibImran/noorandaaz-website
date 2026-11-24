@@ -6,18 +6,48 @@ Payments in this version are manual: cash on delivery, JazzCash, Easypaisa, and 
 
 The catalogue that ships with the project is **sample data**. Photos are original studio placeholders, not a live stock list.
 
-## Run it
+## Setup
 
 ```bash
 npm install
 cp .env.example .env
+npm run hash-password
+```
+
+`npm run hash-password` reads the password from the argument or from stdin and prints `scrypt$<saltHex>$<hashHex>`. It does not print the password. Put that line in `.env` as `ADMIN_PASSWORD_HASH`, with each `$` written as `\$`, because Next expands `$name` in env files:
+
+```bash
+ADMIN_PASSWORD_HASH="scrypt\$<saltHex>\$<hashHex>"
+```
+
+Also set a long random `SESSION_SECRET`, the WhatsApp number, and the payment accounts. Every key is listed in `.env.example`. The values there are placeholders.
+
+Create the database, apply the schema, and load the sample catalogue:
+
+```bash
 npm run setup
+```
+
+`npm run setup` runs `prisma generate`, `prisma db push`, and the seed. `prisma db push` creates `prisma/dev.db` from `prisma/schema.prisma`, including the columns added in `prisma/migrations`. On a database that already has the earlier tables, `npx prisma migrate deploy` applies the checked-in SQL. Do not commit `prisma/dev.db`.
+
+Run it locally:
+
+```bash
 npm run dev
 ```
 
 Open [http://127.0.0.1:3847](http://127.0.0.1:3847).
 
-Sign in at [http://127.0.0.1:3847/admin](http://127.0.0.1:3847/admin). Set `ADMIN_PASSWORD_HASH` before real orders. Until that hash is set, the sample password is `noorandaaz-admin` (from `ADMIN_PASSWORD`). Login allows 5 attempts per 15 minutes per IP.
+For a production process:
+
+```bash
+npm run build
+npm start
+```
+
+The server listens on port `3847`.
+
+Sign in at [http://127.0.0.1:3847/admin](http://127.0.0.1:3847/admin). Set `ADMIN_PASSWORD_HASH` before real orders. If both the hash and `ADMIN_PASSWORD` are empty, the local sample password is `noorandaaz-admin`. Login allows 5 attempts per 15 minutes per IP.
 
 ## Business settings
 
@@ -70,18 +100,7 @@ If you are locked out, stop the server and delete the `adminPasswordHash` row fr
 
 ## Deploy
 
-This app expects one Node server and a disk that keeps the database and uploads.
-
-```bash
-npm install
-cp .env.example .env
-# edit .env: real WhatsApp number, payment accounts, ADMIN_PASSWORD_HASH, a long SESSION_SECRET, and NEXT_PUBLIC_SITE_URL
-npm run setup
-npm run build
-npm start
-```
-
-The server listens on port `3847`. Put it behind your own HTTPS reverse proxy, or change the port in the `start` script.
+This app expects one Node server and a disk that keeps the database and uploads. Use the setup steps above, then `npm run build` and `npm start`. Put the server behind your own HTTPS reverse proxy, or change the port in the `start` script.
 
 Keep these paths on persistent storage:
 

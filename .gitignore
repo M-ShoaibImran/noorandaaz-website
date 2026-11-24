@@ -1,6 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+node_modules/
 /node_modules
 /.pnp
 .pnp.*
@@ -14,6 +15,7 @@
 /coverage
 
 # next.js
+.next/
 /.next/
 /out/
 
@@ -30,14 +32,19 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files. Keep the example. Never commit a real .env.
 .env*
 !.env.example
 
 # database and customer uploads
+*.db
+*.db-journal
+prisma/dev.db*
 /prisma/*.db
 /prisma/*.db-journal
-/public/uploads/*
+uploads/
+public/uploads/*
+!public/uploads/.gitkeep
 !/public/uploads/.gitkeep
 
 # vercel

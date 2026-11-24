@@ -1,0 +1,30 @@
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  async headers() {
+    return [
+      {
+        source: "/((?!_next/static|_next/image|api/uploads).*)",
+        headers: [
+          { key: "Cache-Control", value: "no-store, max-age=0" },
+        ],
+      },
+    ];
+  },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "8mb",
+    },
+    proxyClientMaxBodySize: "8mb",
+  },
+  turbopack: {
+    rules: {
+      "*.css": {
+        loaders: ["./scripts/css-compat-loader.cjs", "@tailwindcss/turbopack"],
+        as: "*.css",
+      },
+    },
+  },
+};
+
+export default nextConfig;

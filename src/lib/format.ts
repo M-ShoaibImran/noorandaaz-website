@@ -24,7 +24,9 @@ export function productLabel(product: { name: string; collection?: string | null
 
 export function safeImage(src?: string | null) {
   if (!src || src.includes("..")) return null;
-  if (src.startsWith("/images/") || src.startsWith("/uploads/")) return src;
+  if (src.startsWith("/images/")) return src;
+  if (src.startsWith("/api/uploads/")) return src;
+  if (src.startsWith("/uploads/")) return `/api/uploads/${src.slice("/uploads/".length)}`;
   return null;
 }
 

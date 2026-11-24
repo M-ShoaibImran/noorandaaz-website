@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { ImageUp } from "lucide-react";
+import { StoreImage } from "@/components/store-image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -245,7 +245,7 @@ export function CustomWizard({ products, initialDesignId }: { products: DesignOp
               {products.map((product) => (
                 <button key={product.id} type="button" onClick={() => { setDesignProductId(product.id); setPreview(product.image); }} className={`border text-left ${designProductId === product.id ? "border-black" : "border-neutral-200"}`}>
                   <div className="relative aspect-[3/4] bg-neutral-100">
-                    {product.image ? <Image src={product.image} alt="" fill sizes="160px" className="object-cover" /> : null}
+                    {product.image ? <StoreImage src={product.image} alt="" fill sizes="160px" className="object-cover" /> : null}
                   </div>
                   <span className="block p-2 text-xs">{product.collection}<br />{product.categoryName}</span>
                 </button>
@@ -258,7 +258,7 @@ export function CustomWizard({ products, initialDesignId }: { products: DesignOp
               <span className="text-base font-medium">{uploading ? "Uploading…" : "Upload a reference photo"}</span>
               <span className="max-w-sm text-sm text-neutral-600">A clear photo of the suit you want copied. JPG, PNG, or WebP, up to 5 MB.</span>
               <input type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={(event) => onUpload(event.target.files?.[0])} />
-              {preview ? <span className="relative mt-2 block aspect-[3/4] w-40"><Image src={preview} alt="Reference photo" fill className="object-cover" /></span> : null}
+              {preview ? <span className="relative mt-2 block aspect-[3/4] w-40"><StoreImage src={preview} alt="Reference photo" fill className="object-cover" /></span> : null}
             </label>
           ) : null}
           {designType === "describe" ? (

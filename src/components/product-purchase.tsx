@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
+import { StoreImage } from "@/components/store-image";
 import { useState } from "react";
 import { formatPrice, productLabel, waLink } from "@/lib/format";
 import { PriceTag, SaleBadge } from "@/components/price-tag";
@@ -50,7 +50,7 @@ export function ProductPurchase({ product }: { product: StoreProduct }) {
     <div className="mx-auto grid max-w-7xl gap-8 px-4 py-6 lg:grid-cols-2 lg:gap-12 lg:py-10">
       <div>
         <div className="relative aspect-[3/4] bg-neutral-100">
-          <Image src={images[active]} alt={label} fill priority sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+          <StoreImage src={images[active]} alt={label} fill priority sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
           <SaleBadge price={product.price} compareAt={product.compareAt} />
           {images.length > 1 ? (
             <div className="absolute inset-x-0 bottom-3 flex justify-center gap-2">
@@ -66,7 +66,7 @@ export function ProductPurchase({ product }: { product: StoreProduct }) {
           <div className="mt-3 flex gap-2">
             {images.map((src, index) => (
               <button key={src} type="button" aria-label={`Show photo ${index + 1}`} onClick={() => setActive(index)} className={`relative h-20 w-16 overflow-hidden border ${index === active ? "border-black" : "border-transparent"}`}>
-                <Image src={src} alt="" fill sizes="64px" className="object-cover" />
+                <StoreImage src={src} alt="" fill sizes="64px" className="object-cover" />
               </button>
             ))}
           </div>

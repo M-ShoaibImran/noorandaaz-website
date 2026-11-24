@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
+import { StoreImage } from "@/components/store-image";
 import { formatPrice, shippingFee, waLink } from "@/lib/format";
 import { PriceTag } from "@/components/price-tag";
 import { useCart, useConfig } from "@/components/providers";
@@ -39,7 +39,7 @@ export function CartView() {
           {items.map((item) => (
             <li key={item.id} className="flex gap-4 py-4">
               <div className="relative aspect-[3/4] w-20 shrink-0 bg-neutral-100">
-                {item.image ? <Image src={item.image} alt="" fill sizes="80px" className="object-cover" /> : null}
+                {item.image ? <StoreImage src={item.image} alt="" fill sizes="80px" className="object-cover" /> : null}
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium">{item.name}</p>

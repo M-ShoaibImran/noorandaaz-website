@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { StoreImage } from "@/components/store-image";
 import { productLabel } from "@/lib/format";
 import type { StoreProduct } from "@/lib/products";
 import { PriceTag, SaleBadge } from "@/components/price-tag";
@@ -11,13 +11,12 @@ export function ProductCard({ product }: { product: StoreProduct }) {
       <Link href={`/product/${product.slug}`} className="group flex h-full flex-col">
         <div className="relative aspect-[3/4] overflow-hidden bg-white">
           {image ? (
-            <Image
+            <StoreImage
               src={image}
               alt={productLabel(product)}
               fill
               sizes="(max-width: 768px) 50vw, 25vw"
               className="object-cover transition duration-500 ease-out group-hover:scale-[1.03] group-active:scale-[1.01]"
-              loading="lazy"
             />
           ) : null}
           <SaleBadge price={product.price} compareAt={product.compareAt} />

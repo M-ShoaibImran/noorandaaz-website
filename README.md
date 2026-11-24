@@ -86,7 +86,7 @@ The server listens on port `3847`. Put it behind your own HTTPS reverse proxy, o
 Keep these paths on persistent storage:
 
 - `prisma/dev.db`
-- `public/uploads/` (payment screenshots, reference photos, and photos added in admin)
+- `public/uploads/` (payment screenshots, reference photos, and photos added in admin). The site serves these through `/api/uploads/...` so files saved after the server starts still show. Payment screenshots are only visible to a signed-in owner.
 
 SQLite is a good fit for a single atelier server (a small VPS, or a platform such as Fly.io or Railway with a volume). Do not run several copies against one SQLite file. If you later need more than one server, point `DATABASE_URL` at Postgres and move uploads to object storage. The schema uses plain strings, so the provider change is small, but it is not wired up in this version.
 

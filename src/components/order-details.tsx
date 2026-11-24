@@ -58,7 +58,7 @@ export function OrderDetails({ order }: { order: Order & { items: OrderItem[] } 
         <p>{order.city}</p>
         {order.deliveryNotes ? <p>Notes: {order.deliveryNotes}</p> : null}
         <p>{paymentLabel(order.paymentMethod)}{order.paymentRef ? ` · ${order.paymentRef}` : ""}</p>
-        {safeImage(order.paymentProof) ? <a className="underline" href={order.paymentProof}>Payment screenshot</a> : null}
+        {order.paymentProof ? <p>Payment screenshot received. We will match it before dispatch.</p> : null}
         <p className="pt-2 text-base font-medium">Total {formatPrice(order.total)} <span className="text-sm font-normal text-neutral-500">including delivery {formatPrice(order.deliveryFee)}</span></p>
       </section>
       <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex h-12 items-center border border-neutral-950 px-5 text-sm">

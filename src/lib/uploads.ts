@@ -18,9 +18,17 @@ export async function saveImage(file: File, folder: string) {
   const directory = path.join(process.cwd(), "public", "uploads", folder);
   await mkdir(directory, { recursive: true });
   await writeFile(path.join(directory, name), buffer);
-  return `/uploads/${folder}/${name}`;
+  return `/api/uploads/${folder}/${name}`;
+}
+
+export function displayImage(src?: string | null) {
+  if (!src || src.includes("..")) return null;
+  if (src.startsWith("/images/")) return src;
+  if (src.startsWith("/api/uploads/")) return src;
+  if (src.startsWith("/uploads/")) return `/api/uploads/${src.slice("/uploads/".length)}`;
+  return null;
 }
 
 export function isManagedImage(src: string) {
-  return (src.startsWith("/images/") || src.startsWith("/uploads/")) && !src.includes("..");
+  return Boolean(displayImage(src));
 }

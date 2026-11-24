@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: "/((?!_next/static|_next/image).*)",
+        source: "/((?!_next/static|_next/image|api/uploads).*)",
         headers: [
           { key: "Cache-Control", value: "no-store, max-age=0" },
         ],

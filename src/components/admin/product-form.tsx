@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { StoreImage } from "@/components/store-image";
 import { useState } from "react";
 import { CATEGORIES, FABRICS, SIZES } from "@/lib/catalog";
 
@@ -156,7 +156,7 @@ export function ProductForm({ initial }: { initial?: Initial }) {
       <div className="flex flex-wrap gap-2">
         {form.images.map((src) => (
           <button type="button" key={src} onClick={() => set("images", form.images.filter((item) => item !== src))} className="relative h-24 w-16 bg-neutral-100">
-            <Image src={src} alt="" fill sizes="64px" className="object-cover" />
+            <StoreImage src={src} alt="" fill sizes="64px" className="object-cover" />
           </button>
         ))}
       </div>

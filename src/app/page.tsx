@@ -64,7 +64,7 @@ export default async function HomePage() {
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/50 lg:to-black/25" />
-        <div className="absolute inset-x-0 bottom-0 max-w-xl p-5 text-ivory sm:p-10 lg:top-0 lg:bottom-auto lg:flex lg:h-full lg:flex-col lg:justify-center">
+        <div className="absolute inset-x-0 bottom-36 max-w-xl p-5 text-ivory sm:bottom-28 sm:p-10 lg:top-0 lg:bottom-auto lg:flex lg:h-full lg:flex-col lg:justify-center">
           <p className="text-xs tracking-[0.28em] text-wheat uppercase">New arrivals</p>
           <h1 className="mt-3 font-serif text-4xl text-white sm:text-6xl">Ready to wear, cut for you.</h1>
           <p className="mt-4 max-w-md text-sm leading-6 text-white/90 sm:text-base">

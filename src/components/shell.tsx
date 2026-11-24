@@ -32,7 +32,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         href={whatsapp}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed right-3 bottom-20 z-40 inline-flex h-12 items-center gap-2 bg-[#128C7E] px-4 text-sm font-medium text-white shadow-lg lg:bottom-6"
+        className="fixed right-3 bottom-[4.75rem] z-40 inline-flex h-12 items-center gap-2 bg-[#128C7E] px-4 text-sm font-medium text-white shadow-lg lg:bottom-6"
       >
         <MessageCircle className="size-4" />
         Order on WhatsApp

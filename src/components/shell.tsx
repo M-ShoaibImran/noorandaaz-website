@@ -32,10 +32,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
         href={whatsapp}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed right-3 bottom-[4.75rem] z-40 inline-flex h-12 items-center gap-2 bg-[#128C7E] px-4 text-sm font-medium text-white shadow-lg lg:bottom-6"
+        aria-label="Order on WhatsApp"
+        className="fixed right-3 bottom-[4.75rem] z-40 inline-flex size-12 items-center justify-center bg-[#128C7E] text-white shadow-lg lg:bottom-6 lg:h-12 lg:w-auto lg:gap-2 lg:px-4"
       >
         <MessageCircle className="size-4" />
-        Order on WhatsApp
+        <span className="hidden text-sm font-medium lg:inline">Order on WhatsApp</span>
       </a>
     </>
   );

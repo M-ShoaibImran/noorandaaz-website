@@ -12,7 +12,7 @@ export async function POST(request: Request) {
       );
     }
     const body = (await request.json()) as { password?: string };
-    if (!body.password || !passwordsMatch(body.password)) {
+    if (!body.password || !(await passwordsMatch(body.password))) {
       return Response.json({ error: "That password is not right." }, { status: 401 });
     }
     await setAdminCookie();

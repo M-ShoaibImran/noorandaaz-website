@@ -30,7 +30,7 @@ export function SiteFooter() {
         <div>
           <p className="text-xs tracking-[0.18em] text-gold uppercase">Help</p>
           <ul className="mt-3 text-sm text-ivory/85">
-            <li><Link href="/track" className="inline-flex min-h-11 items-center transition-colors hover:text-white">Track an order</Link></li>
+            <li><Link href="/track" className="inline-flex min-h-11 items-center transition-colors hover:text-white">Track my order</Link></li>
             <li><Link href="/delivery" className="inline-flex min-h-11 items-center transition-colors hover:text-white">Delivery & returns</Link></li>
             <li><Link href="/faq" className="inline-flex min-h-11 items-center transition-colors hover:text-white">FAQ</Link></li>
             <li><Link href="/contact" className="inline-flex min-h-11 items-center transition-colors hover:text-white">Contact us</Link></li>

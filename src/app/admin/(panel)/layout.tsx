@@ -15,6 +15,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <nav className="flex items-center gap-4 text-sm">
           <Link href="/admin">Orders</Link>
           <Link href="/admin/products">Pieces</Link>
+          <Link href="/admin/password">Password</Link>
           <Link href="/" target="_blank">View shop</Link>
           <SignOutButton />
         </nav>

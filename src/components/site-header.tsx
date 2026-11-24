@@ -12,6 +12,7 @@ const links = [
   { href: "/shop?category=sale", label: "Sale", sale: true },
   { href: "/custom", label: "Custom stitching", sale: false },
   { href: "/contact", label: "Contact us", sale: false },
+  { href: "/track", label: "Track my order", sale: false },
 ];
 
 export function SiteHeader() {
@@ -49,11 +50,8 @@ export function SiteHeader() {
                     {link.label}
                   </Link>
                 ))}
-                <Link href="/size-guide" onClick={() => setOpen(false)} className="flex min-h-12 items-center border-b border-[#e7e2da] px-2 text-base">
+                <Link href="/size-guide" onClick={() => setOpen(false)} className="flex min-h-12 items-center px-2 text-base">
                   Size guide
-                </Link>
-                <Link href="/track" onClick={() => setOpen(false)} className="flex min-h-12 items-center px-2 text-base">
-                  Track an order
                 </Link>
               </nav>
             </SheetContent>

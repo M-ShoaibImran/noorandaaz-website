@@ -48,7 +48,7 @@ The JazzCash, Easypaisa, and bank values in `.env.example` are placeholders. Che
 - Start custom stitching: pick a shop design, upload a reference, or describe it, then choose fabric and enter measurements. Measurements can be saved on the phone and, with a mobile number, loaded again later.
 - Check out with name, phone, optional email, address, city, and delivery notes.
 - Pay by cash on delivery, JazzCash, Easypaisa, or bank transfer. JazzCash, Easypaisa, and bank transfer require a transaction ID and a payment screenshot.
-- See an order number, then track the order later with that number and the same phone.
+- See an order number, then track the order later with that number and the same phone. Track my order is in the header and on the confirmation page.
 
 ## Admin
 
@@ -60,7 +60,11 @@ Make the owner hash with `npm run hash-password` (pass the password as an argume
 ADMIN_PASSWORD_HASH="scrypt\$<saltHex>\$<hashHex>"
 ```
 
-Leave `ADMIN_PASSWORD` empty once the hash is set. The check uses `crypto.scryptSync` (the salt is the hex string itself) and `crypto.timingSafeEqual`. A hash that is set, even if it is malformed, does not fall back to the sample password. Sign-in is limited to 5 attempts per 15 minutes for each IP. The limit is kept in memory on this server and resets when the process restarts.
+Leave `ADMIN_PASSWORD` empty once the hash is set. The check uses `crypto.scryptSync` (the salt is the hex string itself) and `crypto.timingSafeEqual`. A hash that is set, even if it is malformed, does not fall back to the sample password. Sign-in is limited to 5 attempts per 15 minutes for each IP. The limit is kept in memory on this server and resets when the process restarts. A sign-in lasts 7 days.
+
+Change the password while signed in at `/admin/password`. The new password must be at least 10 characters and include one letter and one number. The new hash is saved in the SQLite database and is used instead of `ADMIN_PASSWORD_HASH` after that. Other browsers are signed out. This browser stays signed in.
+
+If you are locked out, stop the server and delete the `adminPasswordHash` row from the `ShopSetting` table in `prisma/dev.db`. Then set a new `ADMIN_PASSWORD_HASH` with `npm run hash-password` and restart. Until a password is saved from the admin page, the `.env` hash is the one that signs you in.
 
 `/admin/products` adds, edits, and deletes pieces, including photos.
 

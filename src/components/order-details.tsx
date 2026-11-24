@@ -1,34 +1,24 @@
 import type { Order, OrderItem } from "@prisma/client";
-import { STATUSES, paymentLabel, statusLabel } from "@/lib/catalog";
+import Link from "next/link";
+import { paymentLabel, statusLabel } from "@/lib/catalog";
+import { OrderProgress } from "@/components/order-progress";
 import { formatPrice, formatWhen, safeImage, waLink } from "@/lib/format";
 import { formatPhone, toWhatsAppNumber } from "@/lib/phone";
 
-const flow = ["pending", "confirmed", "stitching", "dispatched", "delivered"];
-
 export function OrderDetails({ order }: { order: Order & { items: OrderItem[] } }) {
-  const cancelled = order.status === "cancelled";
-  const active = flow.indexOf(order.status);
   const whatsapp = waLink(toWhatsAppNumber(order.phone), `Assalam o Alaikum, this is about Noorandaaz order ${order.orderNumber}.`);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       <p className="text-xs tracking-[0.16em] text-neutral-500 uppercase">Order confirmed</p>
       <h1 className="mt-2 font-serif text-5xl">{order.orderNumber}</h1>
+      <span className="mt-3 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
       <p className="mt-3 text-sm text-neutral-600">Placed {formatWhen(order.createdAt)} · {statusLabel(order.status)}</p>
-      <p className="mt-2 text-sm">Save this number. You can track it with the same mobile number.</p>
-
-      {cancelled ? (
-        <p className="mt-6 border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm">This order was cancelled.</p>
-      ) : (
-        <ol className="mt-6 grid grid-cols-5 gap-2 text-center text-[11px] sm:text-xs">
-          {flow.map((status, index) => (
-            <li key={status} className={index <= active ? "text-black" : "text-neutral-400"}>
-              <span className={`mb-1 block h-1 ${index <= active ? "bg-black" : "bg-neutral-200"}`} />
-              {STATUSES.find((item) => item.id === status)?.label}
-            </li>
-          ))}
-        </ol>
-      )}
+      <p className="mt-2 text-sm">Save this number. You can track it later with the same mobile number.</p>
+      <Link href={`/track?order=${order.orderNumber}`} className="mt-4 inline-flex h-12 items-center border border-neutral-950 px-5 text-sm">
+        Track my order
+      </Link>
+      <OrderProgress order={order} />
 
       <section className="mt-8 divide-y divide-neutral-200 border-y border-neutral-200">
         {order.items.map((item) => (

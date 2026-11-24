@@ -80,6 +80,12 @@ model OrderItem {
   measurementNotes String @default("")
 }
 
+model ShopSetting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
 model MeasurementProfile {
   id            String   @id @default(cuid())
   phone         String

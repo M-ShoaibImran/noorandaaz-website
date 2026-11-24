@@ -8,7 +8,7 @@ export function SiteFooter() {
   const config = useConfig();
   const whatsapp = waLink(config.whatsappNumber, "Assalam o Alaikum Noorandaaz, I have a question about an order.");
   return (
-    <footer className="bg-espresso text-ivory">
+    <footer className="bg-[#1c1917] text-[#fbf8f3]" style={{ backgroundColor: "#1C1917", color: "#FBF8F3" }}>
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <p className="font-serif text-3xl">Noorandaaz</p>

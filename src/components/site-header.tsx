@@ -19,8 +19,8 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="sticky top-0 z-40 border-b border-[#e7e2da] bg-[#fbf8f3]/95 backdrop-blur-md">
-      <p className="bg-espresso px-3 py-2 text-center text-[11px] tracking-wide text-ivory sm:text-xs">
+    <div className="sticky top-0 z-40 border-b border-[#e7e2da] bg-[#fbf8f3]" style={{ backgroundColor: "#FBF8F3", color: "#1C1917" }}>
+      <p className="bg-[#1c1917] px-3 py-2 text-center text-[11px] tracking-wide text-[#fbf8f3] sm:text-xs" style={{ backgroundColor: "#1C1917", color: "#FBF8F3" }}>
         Cash on delivery across Pakistan · Free delivery over {formatPrice(config.freeDeliveryThreshold)}
       </p>
       <header>

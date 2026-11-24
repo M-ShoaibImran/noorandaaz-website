@@ -25,14 +25,31 @@ export const metadata: Metadata = {
     images: [{ url: "/images/hero-campaign.jpg", width: 1200, height: 675, alt: "Noorandaaz campaign" }],
   },
   twitter: { card: "summary_large_image" },
+  other: {
+    "supported-color-schemes": "light",
+  },
+};
+
+export const viewport = {
+  themeColor: "#FBF8F3",
+  colorScheme: "only light",
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   await connection();
   const config = getPublicConfig();
   return (
-    <html lang="en" className={`${outfit.variable} ${fraunces.variable} ${nastaliq.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col">
+    <html
+      lang="en"
+      className={`${outfit.variable} ${fraunces.variable} ${nastaliq.variable} h-full antialiased`}
+      style={{ colorScheme: "only light", backgroundColor: "#FBF8F3", color: "#1C1917" }}
+    >
+      <head>
+        <meta name="color-scheme" content="only light" />
+        <meta name="supported-color-schemes" content="light" />
+        <meta name="theme-color" content="#FBF8F3" />
+      </head>
+      <body className="flex min-h-full flex-col" style={{ backgroundColor: "#FBF8F3", color: "#1C1917" }}>
         <Providers config={config}>
           <Shell>{children}</Shell>
         </Providers>

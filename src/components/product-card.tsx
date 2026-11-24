@@ -6,7 +6,7 @@ import type { StoreProduct } from "@/lib/products";
 export function ProductCard({ product }: { product: StoreProduct }) {
   const image = product.images[0];
   return (
-    <article>
+    <article className="bg-white text-[#1c1917]" style={{ backgroundColor: "#FFFFFF", color: "#1C1917" }}>
       <Link href={`/product/${product.slug}`} className="group block">
         <div className="relative aspect-[3/4] overflow-hidden bg-white">
           {image ? (

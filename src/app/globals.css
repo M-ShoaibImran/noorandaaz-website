@@ -2,8 +2,6 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -91,15 +89,35 @@
   --sidebar-ring: #111111;
 }
 
+html {
+  color-scheme: only light;
+  background-color: #fbf8f3;
+  color: #1c1917;
+}
+body {
+  background-color: #fbf8f3;
+  color: #1c1917;
+}
+input,
+textarea,
+select {
+  background-color: #ffffff;
+  color: #1c1917;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    background-color: #fbf8f3;
+    color: #1c1917;
+    font-family: var(--font-outfit), "Segoe UI", sans-serif;
   }
   html {
-    @apply font-sans;
+    color-scheme: only light;
+    background-color: #fbf8f3;
+    color: #1c1917;
   }
   h1, h2, h3 {
     font-family: var(--font-fraunces), Georgia, serif;

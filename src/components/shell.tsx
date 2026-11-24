@@ -23,7 +23,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         Skip to content
       </a>
       <SiteHeader />
-      <main id="content" className="flex-1 pb-24 lg:pb-0">
+      <main id="content" className="flex-1 bg-[#fbf8f3] pb-24 text-[#1c1917] lg:pb-0" style={{ backgroundColor: "#FBF8F3", color: "#1C1917" }}>
         {children}
       </main>
       <SiteFooter />

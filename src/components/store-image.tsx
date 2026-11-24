@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { displayImage } from "@/lib/uploads";
+import { safeImage } from "@/lib/format";
 
 export function StoreImage({
   src,
@@ -16,7 +16,7 @@ export function StoreImage({
   sizes?: string;
   priority?: boolean;
 }) {
-  const url = displayImage(src) || src;
+  const url = safeImage(src) || src;
   if (url.startsWith("/api/uploads/")) {
     return (
       // Runtime uploads are streamed by the API, which next/image cannot read from public/.

@@ -52,7 +52,7 @@ The JazzCash, Easypaisa, and bank values in `.env.example` are placeholders. Che
 
 ## Admin
 
-`/admin` lists orders. Statuses: pending, confirmed, stitching, dispatched, delivered, cancelled. An order page shows the address, measurements for custom work, and any payment screenshot.
+`/admin` lists orders. Statuses: pending, confirmed, stitching, dispatched, delivered, cancelled. Remove order keeps the record, asks for a reason the customer will see, and hides it until you open the Removed tab and restore it. An order page shows the address, measurements for custom work, and any payment screenshot.
 
 Make the owner hash with `npm run hash-password` (pass the password as an argument, or pipe it on stdin). It prints `scrypt$<saltHex>$<hashHex>`. In `.env`, escape each `$` as `\$`, because Next treats `$name` as another variable and would otherwise erase the salt and hash:
 

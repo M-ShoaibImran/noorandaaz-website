@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { RemoveOrder, RestoreOrder } from "@/components/admin/remove-order";
 import { StatusSelect } from "@/components/admin/status-select";
 import { paymentLabel } from "@/lib/catalog";
 import { db } from "@/lib/db";
@@ -12,7 +13,9 @@ export default async function AdminOrderPage({ params }: { params: Promise<{ id:
   if (!order) notFound();
   const whatsapp = waLink(
     toWhatsAppNumber(order.phone),
-    `Assalam o Alaikum ${order.customerName}, this is Noorandaaz about order ${order.orderNumber}.`,
+    order.status === "removed"
+      ? `Assalam o Alaikum ${order.customerName}, this is Noorandaaz about order ${order.orderNumber}. We removed this order. Reason: ${order.customerRemarks}`
+      : `Assalam o Alaikum ${order.customerName}, this is Noorandaaz about order ${order.orderNumber}.`,
   );
 
   return (
@@ -20,9 +23,14 @@ export default async function AdminOrderPage({ params }: { params: Promise<{ id:
       <Link href="/admin" className="text-sm underline">All orders</Link>
       <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-serif text-4xl">{order.orderNumber}</h1>
-        <StatusSelect id={order.id} status={order.status} />
+        {order.status === "removed" ? <RestoreOrder id={order.id} /> : <StatusSelect id={order.id} status={order.status} />}
       </div>
       <p className="mt-2 text-sm text-neutral-500">{formatWhen(order.createdAt)}</p>
+      {order.status === "removed" ? (
+        <p className="mt-3 border border-[#9b1c1c] bg-white px-3 py-2 text-sm">Removed {order.removedAt ? formatWhen(order.removedAt) : ""}. Reason: {order.customerRemarks}</p>
+      ) : (
+        <div className="mt-4"><RemoveOrder id={order.id} /></div>
+      )}
       <section className="mt-6 space-y-1 text-sm">
         <p>{order.customerName}</p>
         <p>{formatPhone(order.phone)}</p>

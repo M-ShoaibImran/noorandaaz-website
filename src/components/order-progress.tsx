@@ -27,10 +27,24 @@ export function OrderProgress({ order }: { order: Order & { items: OrderItem[] }
   const whatsapp = waLink(config.whatsappNumber, `Assalam o Alaikum Noorandaaz, I am asking about order ${order.orderNumber}.`);
   const current = labelled.find((step) => step.id === order.status);
 
+  if (order.status === "removed") {
+    return (
+      <div className="mt-6 border border-[#9b1c1c] bg-white px-4 py-5">
+        <p className="font-serif text-2xl">This order was removed</p>
+        <p className="mt-3 text-base font-medium leading-7 text-[#1c1917]">{order.customerRemarks}</p>
+        <p className="mt-2 text-sm text-neutral-500">Removed {formatWhen(order.removedAt || order.updatedAt)}</p>
+        <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex h-12 items-center border border-neutral-950 px-5 text-sm">
+          Message us on WhatsApp
+        </a>
+      </div>
+    );
+  }
+
   if (order.status === "cancelled") {
     return (
       <div className="mt-6 border border-neutral-300 bg-white px-4 py-5">
         <p className="font-serif text-2xl">This order was cancelled</p>
+        {order.customerRemarks ? <p className="mt-3 text-base font-medium leading-7 text-[#1c1917]">{order.customerRemarks}</p> : null}
         <p className="mt-2 text-sm leading-6 text-neutral-700">If this is a surprise, message us on WhatsApp with your order number and we will check it.</p>
         <p className="mt-2 text-sm text-neutral-500">Last update {formatWhen(order.updatedAt)}</p>
         <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex h-12 items-center border border-neutral-950 px-5 text-sm">

@@ -29,6 +29,7 @@ export const STATUSES = [
   { id: "dispatched", label: "Dispatched" },
   { id: "delivered", label: "Delivered" },
   { id: "cancelled", label: "Cancelled" },
+  { id: "removed", label: "Removed" },
 ] as const;
 
 export const PAYMENT_METHODS = [

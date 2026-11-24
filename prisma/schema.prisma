@@ -41,11 +41,14 @@ model Order {
   paymentMethod String
   paymentRef    String      @default("")
   paymentProof  String      @default("")
-  subtotal      Int
-  deliveryFee   Int
-  total         Int
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  subtotal            Int
+  deliveryFee         Int
+  total               Int
+  statusBeforeRemoval String   @default("")
+  customerRemarks     String   @default("")
+  removedAt           DateTime?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
   items         OrderItem[]
 
   @@index([phone])

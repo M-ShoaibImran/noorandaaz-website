@@ -167,7 +167,7 @@ export function CheckoutForm() {
         </ul>
         <p className="mt-4 flex justify-between text-sm"><span>Delivery</span><span>{fee === 0 ? "Free" : formatPrice(fee)}</span></p>
         <p className="mt-2 flex justify-between font-medium"><span>Total</span><span>{formatPrice(total)}</span></p>
-        <button type="submit" disabled={pending} className="mt-5 h-12 w-full bg-neutral-950 text-sm text-white disabled:opacity-50">
+        <button type="submit" disabled={pending} className="btn-gold mt-5 w-full disabled:opacity-50">
           {pending ? "Placing order…" : "Place order"}
         </button>
       </aside>

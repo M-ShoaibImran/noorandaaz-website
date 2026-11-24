@@ -5,6 +5,7 @@ export const CATEGORIES = [
   { slug: "chiffon", name: "Chiffon" },
   { slug: "formal", name: "Formal" },
   { slug: "bridal", name: "Bridal & Party" },
+  { slug: "unstitched", name: "Unstitched" },
 ] as const;
 
 export const FABRICS = [

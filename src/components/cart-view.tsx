@@ -64,7 +64,7 @@ export function CartView() {
         <p className="mt-3 text-sm text-neutral-600">
           {fee === 0 ? "Delivery is free on this order." : `Add ${formatPrice(remaining)} for free delivery.`}
         </p>
-        <Link href="/checkout" className="mt-5 flex h-12 items-center justify-center bg-neutral-950 text-sm text-white">Checkout</Link>
+        <Link href="/checkout" className="btn-gold mt-5 w-full">Checkout</Link>
         <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="mt-3 flex h-12 items-center justify-center border border-neutral-950 text-sm">Order on WhatsApp</a>
       </aside>
     </div>

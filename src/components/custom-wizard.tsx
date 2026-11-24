@@ -317,11 +317,11 @@ export function CustomWizard({ products, initialDesignId }: { products: DesignOp
       <div className="sticky bottom-20 z-30 mt-6 flex gap-3 border-t border-neutral-200 bg-white py-3 lg:bottom-0">
         {step > 0 ? <button type="button" className="h-12 flex-1 border border-neutral-950" onClick={() => { setError(""); setStep((value) => value - 1); }}>Back</button> : null}
         {step < 3 ? (
-          <button type="button" className="h-12 flex-1 bg-neutral-950 text-white" onClick={() => { setMessage(""); if (validate(step)) { setError(""); setStep((value) => value + 1); } }}>Continue</button>
+          <button type="button" className="btn-gold flex-1" onClick={() => { setMessage(""); if (validate(step)) { setError(""); setStep((value) => value + 1); } }}>Continue</button>
         ) : (
           <>
             <button type="button" className="h-12 flex-1 border border-neutral-950" onClick={() => add(false)}>Add to bag</button>
-            <button type="button" className="h-12 flex-1 bg-neutral-950 text-white" onClick={() => add(true)}>Checkout</button>
+            <button type="button" className="btn-gold flex-1" onClick={() => add(true)}>Checkout</button>
           </>
         )}
       </div>

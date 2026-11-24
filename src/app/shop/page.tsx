@@ -36,9 +36,10 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         </Suspense>
       </div>
       {visible.length === 0 ? (
-        <div className="py-16 text-center">
-          <p>No pieces match those filters.</p>
-          <a href="/shop" className="mt-3 inline-block text-sm underline">Clear filters</a>
+        <div className="bg-cream px-4 py-16 text-center">
+          <p className="font-serif text-2xl text-espresso">Nothing matches</p>
+          <p className="mt-2 text-sm text-ink/70">Try another fabric, size, or price.</p>
+          <a href="/shop" className="btn-gold mt-5">Clear filters</a>
         </div>
       ) : (
         <div className="mt-8 grid grid-cols-2 gap-x-3 gap-y-8 lg:grid-cols-4">

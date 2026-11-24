@@ -159,18 +159,77 @@ const products = [
     isNew: false,
     sizes: ["S", "M", "L", "XL"],
   },
+  {
+    slug: "chandni-unstitched",
+    look: "neelofar-lawn",
+    name: "3 Piece Unstitched Embroidered Lawn",
+    collection: "Chandni",
+    description: "Unstitched emerald lawn with white embroidery. Stitch it at home, or send it to the atelier.",
+    price: 5490,
+    compareAt: null,
+    category: "unstitched",
+    fabric: "Lawn",
+    featured: false,
+    isNew: true,
+    sizes: ["XS", "S", "M", "L", "XL"],
+  },
+  {
+    slug: "resham-unstitched",
+    look: "gulnar-chiffon",
+    name: "3 Piece Unstitched Chiffon",
+    collection: "Resham",
+    description: "Unstitched lilac chiffon with silver embroidery, for a party suit cut to you.",
+    price: 8900,
+    compareAt: null,
+    category: "unstitched",
+    fabric: "Chiffon",
+    featured: false,
+    isNew: true,
+    sizes: ["XS", "S", "M", "L", "XL"],
+  },
+  {
+    slug: "zarah-unstitched",
+    look: "noor-formal",
+    name: "3 Piece Unstitched Raw Silk",
+    collection: "Zarah",
+    description: "Unstitched ivory raw silk for a formal suit. Includes the trouser and dupatta fabric.",
+    price: 11200,
+    compareAt: null,
+    category: "unstitched",
+    fabric: "Raw Silk",
+    featured: true,
+    isNew: false,
+    sizes: ["XS", "S", "M", "L", "XL"],
+  },
+  {
+    slug: "dhanak-unstitched",
+    look: "saba-kurta",
+    name: "2 Piece Unstitched Khaddar",
+    collection: "Dhanak",
+    description: "Unstitched sage khaddar with gold embroidery, for a winter kurta set.",
+    price: 6200,
+    compareAt: null,
+    category: "unstitched",
+    fabric: "Khaddar",
+    featured: false,
+    isNew: false,
+    sizes: ["XS", "S", "M", "L", "XL"],
+  },
 ];
 
 async function main() {
   for (const [index, product] of products.entries()) {
     const existing = await prisma.product.findUnique({ where: { slug: product.slug } });
     if (existing) continue;
+    const look = "look" in product ? product.look : "";
+    const { look: _look, ...fields } = { look, ...product };
+    const file = look || product.slug;
     await prisma.product.create({
       data: {
-        ...product,
+        ...fields,
         details: "Sample catalogue piece. Replace the photo, price, and copy from the admin panel before selling.",
         sizes: JSON.stringify(product.sizes),
-        images: JSON.stringify([`/images/looks/${product.slug}.jpg`, `/images/products/${product.slug}.jpg`]),
+        images: JSON.stringify([`/images/looks/${file}.jpg`, `/images/products/${file}.jpg`]),
         inStock: true,
         isSample: true,
         createdAt: new Date(Date.UTC(2026, 10, 20, 8, 0, products.length - index)),

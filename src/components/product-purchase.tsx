@@ -106,7 +106,7 @@ export function ProductPurchase({ product }: { product: StoreProduct }) {
           <button type="button" className="size-10 border" onClick={() => setQuantity((value) => Math.min(5, value + 1))} aria-label="Increase quantity">+</button>
         </div>
 
-        <button type="button" onClick={add} disabled={!product.inStock} className="mt-6 h-12 w-full bg-neutral-950 text-sm font-medium text-white disabled:opacity-40">
+        <button type="button" onClick={add} disabled={!product.inStock} className="btn-gold mt-6 w-full disabled:opacity-40">
           {product.inStock ? "Add to bag" : "Out of stock"}
         </button>
         <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="mt-3 flex h-12 w-full items-center justify-center border border-neutral-950 text-sm font-medium">

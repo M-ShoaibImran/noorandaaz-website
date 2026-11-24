@@ -49,8 +49,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <ProductPurchase product={product} />
       {related.length > 0 ? (
         <section className="mx-auto max-w-7xl px-4 py-12">
-          <h2 className="mb-5 font-serif text-3xl">You may also like</h2>
-          <div className="grid grid-cols-2 gap-x-3 gap-y-8 lg:grid-cols-4">
+          <h2 className="font-serif text-3xl">You may also like</h2>
+          <span className="mt-3 mb-5 block h-px w-8" style={{ backgroundColor: "#B8893B" }} />
+          <div className="grid grid-cols-2 items-stretch gap-x-3 gap-y-8 lg:grid-cols-4">
             {related.map((item) => <ProductCard key={item.id} product={item} />)}
           </div>
         </section>

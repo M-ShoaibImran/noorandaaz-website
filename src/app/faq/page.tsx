@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-export const metadata: Metadata = { title: "FAQ" };
+export const metadata: Metadata = { title: "FAQ", description: "Answers about delivery, JazzCash, Easypaisa, bank transfer, custom stitching, and returns at Noorandaaz." };
 
 const items = [
   ["Do you deliver outside Pakistan?", "No. Delivery is domestic only, to cities and towns inside Pakistan."],
@@ -23,7 +23,7 @@ export default function FaqPage() {
       <div className="mt-6 divide-y divide-neutral-200 border-y border-neutral-200">
         {items.map(([question, answer]) => (
           <details key={question} className="group py-4">
-            <summary className="cursor-pointer py-1 text-base">{question}</summary>
+            <summary className="flex min-h-11 cursor-pointer items-center text-base">{question}</summary>
             <p className="pt-2 text-sm leading-6 text-neutral-600">{answer}</p>
           </details>
         ))}

@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: "About", description: "Noorandaaz is 
 export default function AboutPage() {
   return (
     <article className="mx-auto grid max-w-5xl gap-8 px-4 py-12 lg:grid-cols-2">
-      <div className="relative min-h-80">
+      <div className="relative aspect-[4/5] min-h-80">
         <Image src="/images/hero-atelier.jpg" alt="Folded embroidered fabrics and brass scissors" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
       </div>
       <div>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getPublicConfig } from "@/lib/config";
 import { waLink } from "@/lib/format";
 
-export const metadata: Metadata = { title: "Contact" };
+export const metadata: Metadata = { title: "Contact", description: "Message Noorandaaz on WhatsApp or email. Studio visits in Lahore are by appointment. Delivery is inside Pakistan." };
 
 export default function ContactPage() {
   const config = getPublicConfig();

@@ -269,8 +269,9 @@ export function CheckoutForm() {
           ) : null}
         </section>
       </div>
-      <aside className="h-fit border border-neutral-200 p-5 lg:sticky lg:top-28">
-        <ul className="space-y-2 text-sm">
+      <aside className="h-fit border border-neutral-200 bg-white p-5 lg:sticky lg:top-28">
+        <h2 className="text-sm tracking-[0.14em] uppercase">Your order</h2>
+        <ul className="mt-3 space-y-2 text-sm">
           {items.map((item) => (
             <li key={item.id} className="flex justify-between gap-3">
               <span>{item.name} × {item.quantity}</span>

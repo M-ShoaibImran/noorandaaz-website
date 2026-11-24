@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     siteName: "Noorandaaz",
     images: [{ url: "/images/hero-campaign.jpg", width: 1200, height: 675, alt: "Noorandaaz campaign" }],
   },
-  twitter: { card: "summary_large_image" },
+  twitter: { card: "summary_large_image", images: ["/images/hero-campaign.jpg"] },
   other: {
     "supported-color-schemes": "light",
   },

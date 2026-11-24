@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getPublicConfig } from "@/lib/config";
 import { formatPrice } from "@/lib/format";
 
-export const metadata: Metadata = { title: "Delivery and returns" };
+export const metadata: Metadata = { title: "Delivery and returns", description: "Noorandaaz delivers inside Pakistan. See timing, the delivery fee, and how returns work." };
 
 export default function DeliveryPage() {
   const config = getPublicConfig();
